@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://dati.ig.webservice.gateways.payer.seda.com"
+	targetNamespace="http://dati.ig.webservice.gateways.payer.seda.com"
+	elementFormDefault="qualified">
+	
+	<xsd:element name="InvioEsitoRequest" type="tns:BeanInvioEsitoRequest">
+		<xsd:annotation>
+			<xsd:documentation>Request InvioEsito</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	
+	<xsd:element name="InvioEsitoResponse" type="tns:BeanInvioEsitoResponse">
+		<xsd:annotation>
+			<xsd:documentation>Response InvioEsito</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	
+	<xsd:complexType name="BeanInvioEsito">
+		<xsd:sequence>
+			<xsd:element name="tipoChiamata" nillable="false" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Type Call, value allowed online or batch</xsd:documentation>
+				</xsd:annotation>
+				<!-- 
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+      					<xsd:enumeration value="online" id="ONLINE" />
+      					<xsd:enumeration value="batch" id="BATCH" />
+      				</xsd:restriction>
+				</xsd:simpleType>
+				 -->
+			</xsd:element>
+			<xsd:element name="canaleAttivazione" nillable="false">
+				<xsd:annotation>
+					<xsd:documentation>Activation Channel (Example: 01=WEB, 02=MOBILE, 03=ATM, 04=DTT)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+      					<xsd:minLength value="2" />
+      					<xsd:maxLength value="2" />
+      				</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="strumentoPagamento" nillable="false">
+				<xsd:annotation>
+					<xsd:documentation>Payment Type (Example: 01=CARTA DI CREDITO, 02=MAV, 03=RID, 04=PAGA IN CONTO)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+      					<xsd:minLength value="2" />
+      					<xsd:maxLength value="2" />
+      				</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="idOperazione" nillable="false">
+				<xsd:annotation>
+					<xsd:documentation>Operation Identify</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+      					<xsd:minLength value="12" />
+      					<xsd:maxLength value="12" />
+      				</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="codiceMerchant" nillable="false">
+				<xsd:annotation>
+					<xsd:documentation>Merchant Code</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+      					<xsd:minLength value="36" />
+      					<xsd:maxLength value="36" />
+      				</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="descrizioneEsito" nillable="false">
+				<xsd:annotation>
+					<xsd:documentation>Operation State Description</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1" />
+      					<xsd:maxLength value="250" />
+      				</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="codiceEsito" nillable="false" type="xsd:int">
+				<xsd:annotation>
+					<xsd:documentation>Operation State Code</xsd:documentation>
+				</xsd:annotation>
+				<!-- 
+				<xsd:simpleType>
+					<xsd:restriction >
+      					<xsd:enumeration value="0" id="SUCCESS" />
+      					<xsd:enumeration value="1" id="GENERR" />
+      				</xsd:restriction>
+				</xsd:simpleType>
+				 -->
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="BeanInvioEsitoRequest">
+		<xsd:complexContent>
+    		<xsd:extension base="tns:BeanInvioEsito">
+    			<xsd:sequence>
+    				<xsd:element name="dataOperazione" type="xsd:dateTime" nillable="false" minOccurs="1" />	
+    			</xsd:sequence>
+    		</xsd:extension>
+    	</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="BeanInvioEsitoResponse">
+		<xsd:complexContent>
+    		<xsd:extension base="tns:BeanInvioEsito">
+    			<xsd:sequence>
+    				<xsd:element name="urlRedirectMerchant" type="xsd:string" nillable="false" minOccurs="1" />
+    			</xsd:sequence>
+    		</xsd:extension>
+    	</xsd:complexContent>
+	</xsd:complexType>
+
+</xsd:schema>

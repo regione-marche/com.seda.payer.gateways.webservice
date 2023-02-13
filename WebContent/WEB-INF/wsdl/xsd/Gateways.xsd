@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://dati.webservice.gateways.payer.seda.com"
+			xmlns:tns="http://dati.webservice.gateways.payer.seda.com"
+			elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	
+	<xsd:element name="IntegraGTWSincDTTRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="gateway"	type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+				<xsd:element name="impTotTrans" type="xsd:string" nillable="false" ></xsd:element>
+				<xsd:element name="impCostoTrans" type="xsd:string" nillable="false" ></xsd:element>
+				<xsd:element name="impCostoGtw" type="xsd:string" nillable="false" ></xsd:element>
+				<xsd:element name="impSpeseNot" type="xsd:string" nillable="false" ></xsd:element>
+				<xsd:element name="cardNumber" type="xsd:string" nillable="false" ></xsd:element>
+				<xsd:element name="expMonth" type="xsd:string" nillable="false" ></xsd:element>
+				<xsd:element name="expYear" type="xsd:string" nillable="false" ></xsd:element>
+				<xsd:element name="holder" type="xsd:string" nillable="false" ></xsd:element>
+				<xsd:element name="cvv2" type="xsd:string" nillable="false" ></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>		
+
+	<xsd:element name="AllineaAutomaticoTransazioneRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="dataPagamento" type="xsd:dateTime" nillable="true" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="AllineaManualeTransazioneRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="transazione" type="tns:TransazioneType" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="AllineaTransazioneRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="transazione" type="tns:TransazioneType" />
+				<xsd:element name="dataPagamento" type="xsd:dateTime" nillable="true"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="GeneraMessageGTWRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="gateway" type="tns:GatewayType" nillable="false" />
+				<xsd:element name="ordertotal" type="xsd:decimal" nillable="true" />				
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="IntegraGTWAsincRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="transazione" type="tns:TransazioneType" />
+				<xsd:element name="dataPagamento" type="xsd:dateTime" nillable="true"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="IntegraGTWSincRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="transazione"	type="tns:TransazioneType" />
+				<xsd:element name="impTotTransazione" type="xsd:decimal" nillable="false" />
+				<xsd:element name="emailContribuente" type="xsd:string" nillable="false" />
+				<xsd:element name="impCostiTransazione" type="xsd:decimal" nillable="true" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="canalePagamento" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="tokenCsrf" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+				<xsd:element name="identificativiDocumenti" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+				<xsd:element name="codiceDebitore" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+				<xsd:element name="userName" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+				<xsd:element name="scadenzaPagamento" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+				<xsd:element name="causalePagamento" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+				<xsd:element name="mavCognomeOrRagioneSocialeDebitore" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+				<xsd:element name="mavNomeDebitore" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+				<xsd:element name="mavIndirizzoDebitore" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+				<xsd:element name="mavCapDebitore" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+				<xsd:element name="mavLocalitaDebitore" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+				<xsd:element name="mavProvinciaDebitore" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>		
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="IntegraGTWSinc_MultiEnte">
+		<xsd:sequence>			
+			<xsd:element name="integraGTWSinc_MultiEnte" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="transazione"	type="tns:TransazioneType" />
+						<xsd:element name="impTotTransazione" type="xsd:decimal" nillable="false" />
+						<xsd:element name="emailContribuente" type="xsd:string" nillable="false" />
+						<xsd:element name="impCostiTransazione" type="xsd:decimal" nillable="true" minOccurs="0" maxOccurs="1" />
+						<xsd:element name="canalePagamento" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" />
+						<xsd:element name="tokenCsrf" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+						<xsd:element name="identificativiDocumenti" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+						<xsd:element name="codiceDebitore" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+						<xsd:element name="userName" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+						<xsd:element name="scadenzaPagamento" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+						<xsd:element name="causalePagamento" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+						<xsd:element name="mavCognomeOrRagioneSocialeDebitore" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+						<xsd:element name="mavNomeDebitore" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+						<xsd:element name="mavIndirizzoDebitore" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+						<xsd:element name="mavCapDebitore" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+						<xsd:element name="mavLocalitaDebitore" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>
+						<xsd:element name="mavProvinciaDebitore" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" ></xsd:element>		
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>				
+
+	<xsd:element name="IntegraGTWSinc_MultiEnteRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element minOccurs="0" maxOccurs="unbounded" name="integraGTWSinc_MultiEnte" nillable="true" type="tns:IntegraGTWSinc_MultiEnte" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="RedirectToGTWRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="transazione" type="tns:TransazioneType" />
+				<xsd:element name="apiReturnURL" type="xsd:string" nillable="false"/>
+				<xsd:element name="apiCancelURL" type="xsd:string" nillable="false"/>
+				<xsd:element name="apiOrderTotal" type="xsd:string" nillable="false"/>
+				<xsd:element name="apiUsername" type="xsd:string" nillable="false"/>
+				<xsd:element name="apiPassword" type="xsd:string" nillable="false"/>
+				<xsd:element name="apiSignature" type="xsd:string" nillable="false"/>
+				<xsd:element name="apiEndPointUrl" type="xsd:string" nillable="false"/>
+				<xsd:element name="apiVersion" type="xsd:string" nillable="false"/>
+				<xsd:element name="tokenCsrf" type="xsd:string" maxOccurs="1" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="VerificaEsitoGTWRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="gateway" type="tns:GatewayType" />
+				<xsd:element name="impTotTransazione" type="xsd:decimal" nillable="false" />
+				<xsd:element name="DatiPagOnline"
+				minOccurs="0" maxOccurs="1" nillable="true"
+				type="tns:DatiPagOnline" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:complexType name="DatiPagOnline">
+		<xsd:sequence>
+			<xsd:element name="numeroOrdine" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="tipoGateway" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="numeroCommerciante" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="stabilimento" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="esito" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="dataApprovazione" type="xsd:dateTime" nillable="true" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="mac" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="IntegraGTWSincDTTResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="esitoTransazione" type="xsd:string" nillable="false" minOccurs="1" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>	
+
+	<xsd:element name="AllineaAutomaticoTransazioneResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="response" type="tns:ResponseType" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="AllineaAutomaticoTransazioneIGResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="response" type="tns:ResponseType" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="AllineaManualeTransazioneResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="response" type="tns:ResponseType" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="AllineaTransazioneResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="response" type="tns:ResponseType" />
+				<!-- 
+				<xsd:element name="tokenGTW" type="xsd:string" nillable="true"/>
+				 -->
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="GeneraMessageGTWResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="response" type="tns:ResponseType" />
+				<xsd:element name="apiRedirect" type="xsd:string" nillable="false" />
+				<xsd:element name="apiReturnURL" type="xsd:string" nillable="false" />
+				<xsd:element name="apiCancelURL" type="xsd:string" nillable="false" />
+				<xsd:element name="apiOrderTotal" type="xsd:string" nillable="false" />
+				<xsd:element name="apiUsername" type="xsd:string" nillable="false" />
+				<xsd:element name="apiPassword" type="xsd:string" nillable="false" />
+				<xsd:element name="apiSignature" type="xsd:string" nillable="false" />
+				<xsd:element name="apiEndPointUrl" type="xsd:string" nillable="false" />
+				<xsd:element name="apiVersion" type="xsd:string" nillable="true" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="IntegraGTWAsincResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="response" type="tns:ResponseType" nillable="false" />
+				<xsd:element name="esitoTransazione" type="xsd:string" nillable="false"/>
+				<xsd:element name="codAutBanca" type="xsd:string" nillable="true"/>
+				<xsd:element name="codIdBanca" type="xsd:string" nillable="true"/>
+				<xsd:element name="dataPagamento" type="xsd:dateTime" nillable="true"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="IntegraGTWSincResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="response" type="tns:ResponseType" nillable="false" />
+				<xsd:element name="urlRedirectGTW" type="xsd:string" nillable="false"/>
+				<xsd:element name="tipoGTW" type="xsd:string" nillable="true"/>
+				<xsd:element name="params" type="xsd:string" nillable="true"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="RedirectToGTWResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="response" type="tns:ResponseType" />
+				<xsd:element name="token" type="xsd:string" nillable="false"/>				
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="VerificaEsitoGTWResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="response" type="tns:ResponseType" />
+				<xsd:element name="esitoTransazione" type="xsd:string" nillable="false" minOccurs="1" />
+				<xsd:element name="codAutBanca" type="xsd:string" nillable="true" />
+				<xsd:element name="codIdBanca" type="xsd:string" nillable="true" />
+				<xsd:element name="dataPagamento" type="xsd:dateTime" nillable="true" minOccurs="0" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="TransazioneType">
+		<xsd:sequence>
+			<xsd:element name="chiaveTransazione" type="xsd:string" nillable="false" minOccurs="1" />
+			<xsd:element name="chiaveGTW" type="xsd:string" nillable="false" minOccurs="1" />
+			<xsd:element name="chiavePspNodoSpc" type="xsd:string" nillable="false" minOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GatewayType">
+		<xsd:sequence>
+			<xsd:element name="chiaveGTW" type="xsd:string" nillable="false" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="token" type="xsd:string" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ResponseType">
+		<xsd:sequence>
+			<xsd:element name="retCode">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+      					<xsd:length value="2"></xsd:length>
+      					<xsd:enumeration value="00">
+      						<xsd:annotation><!-- Request execute successfully --></xsd:annotation>
+      					</xsd:enumeration>
+      					<xsd:enumeration value="01">
+      						<xsd:annotation><!-- Generic error --></xsd:annotation>
+      					</xsd:enumeration>
+      				</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="retMessage">
+				<xsd:annotation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="0"></xsd:minLength>
+						<xsd:maxLength value="1024"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<!--  request e response per il RID  INIZIO -->
+	<xsd:element name="RIDAdesioneRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="canalePagamento" type="xsd:string" nillable="false"/>
+				<xsd:element name="codiceDebitore" type="xsd:string" nillable="false"/>
+				<xsd:element name="codiceFiscaleDebitore" type="xsd:string" nillable="false"/>
+				<xsd:element name="cognomeOrRagioneSocialeDebitore" type="xsd:string" nillable="false"/>
+				<xsd:element name="ibanDaAddebitare" type="xsd:string" nillable="false"/>
+				<xsd:element name="nomeSottoscrittore" type="xsd:string" nillable="false"/>
+				<xsd:element name="cognomeSottoscrittore" type="xsd:string" nillable="false"/>
+				<xsd:element name="codiceFiscaleSottoscrittore" type="xsd:string" nillable="false"/>
+				<xsd:element name="nomeIntestatarioCC" type="xsd:string" nillable="false"/>
+				<xsd:element name="cognomeIntestatarioCC" type="xsd:string" nillable="false"/>
+				<xsd:element name="codiceFiscaleIntestatarioCC" type="xsd:string" nillable="false"/>
+				<xsd:element name="userName" type="xsd:string" nillable="false"/>
+				<xsd:element name="mailUser" type="xsd:string" nillable="false"/>
+				<xsd:element name="operatoreUltimoAggiornamento" type="xsd:string" nillable="false"/>				
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RIDAdesioneResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="pathPdf" type="xsd:string" nillable="true"/>
+				<xsd:element name="retCode" type="xsd:string" nillable="false"/>
+				<xsd:element name="retMessage" type="xsd:string" nillable="false"/>			
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="RIDRevocaRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="canalePagamento" type="xsd:string" nillable="false"/>
+				<xsd:element name="codiceDebitore" type="xsd:string" nillable="false"/>
+				<xsd:element name="username" type="xsd:string" nillable="false"/>	
+				<xsd:element name="operatoreUltimoAggiornamento" type="xsd:string" nillable="false"/>				
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RIDRevocaResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="retCode" type="xsd:string" nillable="false"/>
+				<xsd:element name="retMessage" type="xsd:string" nillable="false"/>			
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="RIDVerificaStatoRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="codiceFiscale" type="xsd:string" nillable="false"/>		
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RIDVerificaStatoResponse">
+		<xsd:complexType>
+			<xsd:sequence>				
+				<xsd:element name="flagAdesione" type="xsd:string" nillable="false"/>
+				<xsd:element name="flagRevoca" type="xsd:string" nillable="false"/>
+				<xsd:element name="flagAbilitazioneRID" type="xsd:string" nillable="false"/>
+				<xsd:element name="tipoRichiesta">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+	     					<xsd:length value="1"></xsd:length>
+	     					<xsd:enumeration value="N">
+	     						<xsd:annotation><!-- nessuna --></xsd:annotation>
+	     					</xsd:enumeration>
+	     					<xsd:enumeration value="A">
+								<xsd:annotation><!-- Adesione --></xsd:annotation>
+	     					</xsd:enumeration>
+	     					<xsd:enumeration value="R">
+								<xsd:annotation><!-- Revoca --></xsd:annotation>
+	     					</xsd:enumeration>
+	     				</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="statoRichiesta">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="NONE">
+	     						<xsd:annotation><!-- nessuna richiesta--></xsd:annotation>
+	     					</xsd:enumeration>
+	     					<xsd:enumeration value="INCORSO">
+	     						<xsd:annotation><!-- richiesta in corso --></xsd:annotation>
+	     					</xsd:enumeration>
+	     					<xsd:enumeration value="INERRORE">
+								<xsd:annotation><!-- richiesta in errore --></xsd:annotation>
+	     					</xsd:enumeration>
+	     					<xsd:enumeration value="ACCETTATA">
+								<xsd:annotation><!-- richiesta accettata --></xsd:annotation>
+	     					</xsd:enumeration>
+	     					<xsd:enumeration value="NEGATA">
+	     						<xsd:annotation><!-- richiesta negata --></xsd:annotation>
+	     					</xsd:enumeration>
+	     				</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="codiceAEA" type="xsd:string" nillable="false"/>
+				<xsd:element name="codiceAEADescrizione" type="xsd:string" nillable="false"/>				
+				<xsd:element name="retCode" type="xsd:string" nillable="false"/>
+				<xsd:element name="retMessage" type="xsd:string" nillable="false"/>			
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="RIDAllineaRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="sEmpty" type="xsd:string" nillable="false"/>		
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RIDAllineaResponse">
+		<xsd:complexType>
+			<xsd:sequence>				
+				<xsd:element name="retCode" type="xsd:string" nillable="false"/>
+				<xsd:element name="retMessage" type="xsd:string" nillable="false"/>			
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	
+	<xsd:element name="RIDAllineaArchiviazioneRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="sEmpty" type="xsd:string" nillable="false"/>		
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RIDAllineaArchiviazioneResponse">
+		<xsd:complexType>
+			<xsd:sequence>				
+				<xsd:element name="retCode" type="xsd:string" nillable="false"/>
+				<xsd:element name="retMessage" type="xsd:string" nillable="false"/>			
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!--  request e response per il RID  FINE -->
+	
+	
+	<xsd:element name="RichiediStornoRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="idOperazione" type="xsd:string" nillable="false" maxOccurs="1"/>
+				<xsd:element name="codiceMerchant" type="xsd:string" nillable="false" maxOccurs="1"/>
+				<xsd:element name="importoNetto" type="xsd:decimal" nillable="false" maxOccurs="1"/>
+				<xsd:element name="canalePagamento" type="xsd:string" nillable="false" maxOccurs="1" />
+				<xsd:element name="chiaveGateway" type="xsd:string" nillable="false" maxOccurs="1" />
+				<xsd:element name="codiceOperatore" type="xsd:string" nillable="false" maxOccurs="1" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="RichiediStornoResponse">
+		<xsd:complexType>
+			<xsd:sequence>				
+				<xsd:element name="retCode" type="xsd:string" nillable="false"/>
+				<xsd:element name="retMessage" type="xsd:string" nillable="false"/>			
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="GeneraFlussiRendicontazionePosRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element minOccurs="0" name="none" maxOccurs="1" nillable="true" type="xsd:string"/>    
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="GeneraFlussiRendicontazionePosResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				    <xsd:element name="response" type="tns:ResponseType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+</xsd:schema>

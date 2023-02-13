@@ -1,0 +1,501 @@
+<ns1:deployment 
+xmlns="http://xml.apache.org/axis/wsdd/" 
+xmlns:java="http://xml.apache.org/axis/wsdd/providers/java" 
+xmlns:ns1="http://xml.apache.org/axis/wsdd/">
+ <ns1:globalConfiguration>
+  <ns1:parameter name="sendMultiRefs" value="true"/>
+  <ns1:parameter name="disablePrettyXML" value="true"/>
+  <ns1:parameter name="adminPassword" value="admin"/>
+  <!--ns1:parameter name="attachments.Directory" value="temp"/-->
+  <ns1:parameter name="dotNetSoapEncFix" value="true"/>
+  <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
+  <ns1:parameter name="sendXMLDeclaration" value="true"/>
+  <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <ns1:requestFlow>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="session"/>
+   </ns1:handler>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="request"/>
+    <ns1:parameter name="extension" value=".jwr"/>
+   </ns1:handler>
+  </ns1:requestFlow>
+ </ns1:globalConfiguration>
+ <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
+ <ns1:handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
+ <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
+ 
+  <!-- Services from GatewaysService WSDL service -->
+
+  <service name="gateways" provider="java:RPC" style="document" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://source.webservice.gateways.payer.seda.com"/>
+      <parameter name="wsdlServiceElement" value="GatewaysService"/>
+      <parameter name="schemaQualified" value="http://srv.webservice.gateways.payer.seda.com,http://dati.webservice.gateways.payer.seda.com"/>
+      <parameter name="schemaUnqualified" value="http://source.webservice.gateways.payer.seda.com"/>
+      <parameter name="wsdlServicePort" value="GatewaysPort"/>
+      <parameter name="className" value="com.seda.payer.gateways.webservice.source.Gateways"/>
+      <parameter name="wsdlPortType" value="GatewaysInterface"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="allineaAutomaticoTransazione" qname="allineaAutomaticoTransazione" returnQName="retNS:AllineaAutomaticoTransazioneResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>AllineaAutomaticoTransazioneResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:AllineaAutomaticoTransazioneRequest" xmlns:pns="http://dati.webservice.gateways.payer.seda.com" type="tns:>AllineaAutomaticoTransazioneRequest" xmlns:tns="http://dati.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <operation name="allineaManualeTransazione" qname="allineaManualeTransazione" returnQName="retNS:AllineaManualeTransazioneResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>AllineaManualeTransazioneResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:AllineaManualeTransazioneRequest" xmlns:pns="http://dati.webservice.gateways.payer.seda.com" type="tns:>AllineaManualeTransazioneRequest" xmlns:tns="http://dati.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <operation name="integraGTWAsinc" qname="integraGTWAsinc" returnQName="retNS:IntegraGTWAsincResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>IntegraGTWAsincResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:IntegraGTWAsincRequest" xmlns:pns="http://dati.webservice.gateways.payer.seda.com" type="tns:>IntegraGTWAsincRequest" xmlns:tns="http://dati.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <operation name="integraGTWSinc" qname="integraGTWSinc" returnQName="retNS:IntegraGTWSincResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>IntegraGTWSincResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:IntegraGTWSincRequest" xmlns:pns="http://dati.webservice.gateways.payer.seda.com" type="tns:>IntegraGTWSincRequest" xmlns:tns="http://dati.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <operation name="integraGTWSinc_MultiEnte" qname="integraGTWSinc_MultiEnte" returnQName="retNS:IntegraGTWSincResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>IntegraGTWSincResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:IntegraGTWSinc_MultiEnteRequest" xmlns:pns="http://dati.webservice.gateways.payer.seda.com" type="tns:>IntegraGTWSinc_MultiEnteRequest" xmlns:tns="http://dati.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <operation name="verificaEsitoGTW" qname="verificaEsitoGTW" returnQName="retNS:VerificaEsitoGTWResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>VerificaEsitoGTWResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:VerificaEsitoGTWRequest" xmlns:pns="http://dati.webservice.gateways.payer.seda.com" type="tns:>VerificaEsitoGTWRequest" xmlns:tns="http://dati.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <operation name="integraGTWSincDTT" qname="integraGTWSincDTT" returnQName="retNS:IntegraGTWSincDTTResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>IntegraGTWSincDTTResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:IntegraGTWSincDTTRequest" xmlns:pns="http://dati.webservice.gateways.payer.seda.com" type="tns:>IntegraGTWSincDTTRequest" xmlns:tns="http://dati.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <operation name="allineaAutomaticoTransazioneIG" qname="allineaAutomaticoTransazioneIG" returnQName="retNS:AllineaAutomaticoTransazioneIGResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>AllineaAutomaticoTransazioneIGResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <operation name="adesioneRID" qname="adesioneRID" returnQName="retNS:RIDAdesioneResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>RIDAdesioneResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:RIDAdesioneRequest" xmlns:pns="http://dati.webservice.gateways.payer.seda.com" type="tns:>RIDAdesioneRequest" xmlns:tns="http://dati.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <operation name="revocaRID" qname="revocaRID" returnQName="retNS:RIDRevocaResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>RIDRevocaResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:RIDRevocaRequest" xmlns:pns="http://dati.webservice.gateways.payer.seda.com" type="tns:>RIDRevocaRequest" xmlns:tns="http://dati.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <operation name="verificaStatoRID" qname="verificaStatoRID" returnQName="retNS:RIDVerificaStatoResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>RIDVerificaStatoResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:RIDVerificaStatoRequest" xmlns:pns="http://dati.webservice.gateways.payer.seda.com" type="tns:>RIDVerificaStatoRequest" xmlns:tns="http://dati.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <operation name="allineaRID" qname="allineaRID" returnQName="retNS:RIDAllineaResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>RIDAllineaResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:RIDAllineaRequest" xmlns:pns="http://dati.webservice.gateways.payer.seda.com" type="tns:>RIDAllineaRequest" xmlns:tns="http://dati.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <operation name="allineaRIDArchiviazione" qname="allineaRIDArchiviazione" returnQName="retNS:RIDAllineaArchiviazioneResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>RIDAllineaArchiviazioneResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:RIDAllineaArchiviazioneRequest" xmlns:pns="http://dati.webservice.gateways.payer.seda.com" type="tns:>RIDAllineaArchiviazioneRequest" xmlns:tns="http://dati.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <operation name="richiediStorno" qname="richiediStorno" returnQName="retNS:RichiediStornoResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>RichiediStornoResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:RichiediStornoRequest" xmlns:pns="http://dati.webservice.gateways.payer.seda.com" type="tns:>RichiediStornoRequest" xmlns:tns="http://dati.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <operation name="generaFlussiRendicontazionePos" qname="generaFlussiRendicontazionePos" returnQName="retNS:GeneraFlussiRendicontazionePosResponse" xmlns:retNS="http://dati.webservice.gateways.payer.seda.com" returnType="rtns:>GeneraFlussiRendicontazionePosResponse" xmlns:rtns="http://dati.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:GeneraFlussiRendicontazionePosRequest" xmlns:pns="http://dati.webservice.gateways.payer.seda.com" type="tns:>GeneraFlussiRendicontazionePosRequest" xmlns:tns="http://dati.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysFaultException" qname="fns:Fault" xmlns:fns="http://srv.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <parameter name="allowedMethods" value="allineaManualeTransazione integraGTWAsinc richiediStorno revocaRID generaFlussiRendicontazionePos allineaRID integraGTWSincDTT allineaRIDArchiviazione integraGTWSinc integraGTWSinc_MultiEnte allineaAutomaticoTransazioneIG allineaAutomaticoTransazione verificaStatoRID verificaEsitoGTW adesioneRID"/>
+
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>AllineaAutomaticoTransazioneIGResponse"
+        type="java:com.seda.payer.gateways.webservice.dati.AllineaAutomaticoTransazioneIGResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>RIDAllineaResponse"
+        type="java:com.seda.payer.gateways.webservice.dati.RIDAllineaResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>RIDAdesioneRequest"
+        type="java:com.seda.payer.gateways.webservice.dati.RIDAdesioneRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>>RIDVerificaStatoResponse>tipoRichiesta"
+        type="java:com.seda.payer.gateways.webservice.dati.RIDVerificaStatoResponseTipoRichiesta"
+        serializer="org.apache.axis.encoding.ser.EnumSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.EnumDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>RIDAdesioneResponse"
+        type="java:com.seda.payer.gateways.webservice.dati.RIDAdesioneResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://srv.webservice.gateways.payer.seda.com"
+        qname="ns:FaultType"
+        type="java:com.seda.payer.gateways.webservice.srv.FaultType"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>RIDAllineaRequest"
+        type="java:com.seda.payer.gateways.webservice.dati.RIDAllineaRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>AllineaAutomaticoTransazioneRequest"
+        type="java:com.seda.payer.gateways.webservice.dati.AllineaAutomaticoTransazioneRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>GeneraFlussiRendicontazionePosRequest"
+        type="java:com.seda.payer.gateways.webservice.dati.GeneraFlussiRendicontazionePosRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>RIDVerificaStatoResponse"
+        type="java:com.seda.payer.gateways.webservice.dati.RIDVerificaStatoResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>IntegraGTWAsincResponse"
+        type="java:com.seda.payer.gateways.webservice.dati.IntegraGTWAsincResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>>RIDVerificaStatoResponse>statoRichiesta"
+        type="java:com.seda.payer.gateways.webservice.dati.RIDVerificaStatoResponseStatoRichiesta"
+        serializer="org.apache.axis.encoding.ser.EnumSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.EnumDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>AllineaManualeTransazioneRequest"
+        type="java:com.seda.payer.gateways.webservice.dati.AllineaManualeTransazioneRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>ResponseType>retMessage"
+        type="java:java.lang.String"
+        serializer="org.apache.axis.encoding.ser.SimpleSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.SimpleDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>IntegraGTWAsincRequest"
+        type="java:com.seda.payer.gateways.webservice.dati.IntegraGTWAsincRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>RIDAllineaArchiviazioneResponse"
+        type="java:com.seda.payer.gateways.webservice.dati.RIDAllineaArchiviazioneResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>GeneraFlussiRendicontazionePosResponse"
+        type="java:com.seda.payer.gateways.webservice.dati.GeneraFlussiRendicontazionePosResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>AllineaAutomaticoTransazioneResponse"
+        type="java:com.seda.payer.gateways.webservice.dati.AllineaAutomaticoTransazioneResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>RIDRevocaRequest"
+        type="java:com.seda.payer.gateways.webservice.dati.RIDRevocaRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>VerificaEsitoGTWRequest"
+        type="java:com.seda.payer.gateways.webservice.dati.VerificaEsitoGTWRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>IntegraGTWSincResponse"
+        type="java:com.seda.payer.gateways.webservice.dati.IntegraGTWSincResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>IntegraGTWSincDTTResponse"
+        type="java:com.seda.payer.gateways.webservice.dati.IntegraGTWSincDTTResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:GatewayType"
+        type="java:com.seda.payer.gateways.webservice.dati.GatewayType"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>IntegraGTWSincDTTRequest"
+        type="java:com.seda.payer.gateways.webservice.dati.IntegraGTWSincDTTRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>IntegraGTWSincRequest"
+        type="java:com.seda.payer.gateways.webservice.dati.IntegraGTWSincRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>IntegraGTWSinc_MultiEnteRequest"
+        type="java:com.seda.payer.gateways.webservice.dati.IntegraGTWSinc_MultiEnteRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:ResponseType"
+        type="java:com.seda.payer.gateways.webservice.dati.ResponseType"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>RIDRevocaResponse"
+        type="java:com.seda.payer.gateways.webservice.dati.RIDRevocaResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>VerificaEsitoGTWResponse"
+        type="java:com.seda.payer.gateways.webservice.dati.VerificaEsitoGTWResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:TransazioneType"
+        type="java:com.seda.payer.gateways.webservice.dati.TransazioneType"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>RIDAllineaArchiviazioneRequest"
+        type="java:com.seda.payer.gateways.webservice.dati.RIDAllineaArchiviazioneRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>AllineaManualeTransazioneResponse"
+        type="java:com.seda.payer.gateways.webservice.dati.AllineaManualeTransazioneResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>RichiediStornoResponse"
+        type="java:com.seda.payer.gateways.webservice.dati.RichiediStornoResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>RichiediStornoRequest"
+        type="java:com.seda.payer.gateways.webservice.dati.RichiediStornoRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>RIDVerificaStatoRequest"
+        type="java:com.seda.payer.gateways.webservice.dati.RIDVerificaStatoRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.webservice.gateways.payer.seda.com"
+        qname="ns:>ResponseType>retCode"
+        type="java:com.seda.payer.gateways.webservice.dati.ResponseTypeRetCode"
+        serializer="org.apache.axis.encoding.ser.EnumSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.EnumDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+  
+  
+  <!-- Services from GatewaysIGService WSDL service -->
+  
+  <service name="gatewaysIG" provider="java:RPC" style="document" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://source.ig.webservice.gateways.payer.seda.com"/>
+      <parameter name="wsdlServiceElement" value="GatewaysIGService"/>
+      <parameter name="schemaQualified" value="http://srv.ig.webservice.gateways.payer.seda.com,http://dati.ig.webservice.gateways.payer.seda.com"/>
+      <parameter name="schemaUnqualified" value="http://source.ig.webservice.gateways.payer.seda.com"/>
+      <parameter name="wsdlServicePort" value="GatewaysIGPort"/>
+      <parameter name="className" value="com.seda.payer.gateways.webservice.ig.source.GatewaysIG"/>
+      <parameter name="wsdlPortType" value="GatewaysIGInterface"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="invioEsito" qname="invioEsito" returnQName="retNS:InvioEsitoResponse" xmlns:retNS="http://dati.ig.webservice.gateways.payer.seda.com" returnType="rtns:BeanInvioEsitoResponse" xmlns:rtns="http://dati.ig.webservice.gateways.payer.seda.com" soapAction="" >
+        <parameter qname="pns:InvioEsitoRequest" xmlns:pns="http://dati.ig.webservice.gateways.payer.seda.com" type="tns:BeanInvioEsitoRequest" xmlns:tns="http://dati.ig.webservice.gateways.payer.seda.com"/>
+        <fault name="GatewaysIGFaultException" qname="fns:Fault" xmlns:fns="http://srv.ig.webservice.gateways.payer.seda.com" class="com.seda.payer.gateways.webservice.ig.srv.FaultType" type="tns:FaultType" xmlns:tns="http://srv.ig.webservice.gateways.payer.seda.com"/>
+      </operation>
+      <parameter name="allowedMethods" value="invioEsito"/>
+
+      <typeMapping
+        xmlns:ns="http://srv.ig.webservice.gateways.payer.seda.com"
+        qname="ns:FaultType"
+        type="java:com.seda.payer.gateways.webservice.ig.srv.FaultType"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.ig.webservice.gateways.payer.seda.com"
+        qname="ns:>BeanInvioEsito>canaleAttivazione"
+        type="java:java.lang.String"
+        serializer="org.apache.axis.encoding.ser.SimpleSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.SimpleDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.ig.webservice.gateways.payer.seda.com"
+        qname="ns:>BeanInvioEsito>idOperazione"
+        type="java:java.lang.String"
+        serializer="org.apache.axis.encoding.ser.SimpleSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.SimpleDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.ig.webservice.gateways.payer.seda.com"
+        qname="ns:>BeanInvioEsito>strumentoPagamento"
+        type="java:java.lang.String"
+        serializer="org.apache.axis.encoding.ser.SimpleSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.SimpleDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.ig.webservice.gateways.payer.seda.com"
+        qname="ns:>BeanInvioEsito>codiceMerchant"
+        type="java:java.lang.String"
+        serializer="org.apache.axis.encoding.ser.SimpleSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.SimpleDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.ig.webservice.gateways.payer.seda.com"
+        qname="ns:BeanInvioEsitoRequest"
+        type="java:com.seda.payer.gateways.webservice.ig.dati.BeanInvioEsitoRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.ig.webservice.gateways.payer.seda.com"
+        qname="ns:BeanInvioEsitoResponse"
+        type="java:com.seda.payer.gateways.webservice.ig.dati.BeanInvioEsitoResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.ig.webservice.gateways.payer.seda.com"
+        qname="ns:>BeanInvioEsito>descrizioneEsito"
+        type="java:java.lang.String"
+        serializer="org.apache.axis.encoding.ser.SimpleSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.SimpleDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dati.ig.webservice.gateways.payer.seda.com"
+        qname="ns:BeanInvioEsito"
+        type="java:com.seda.payer.gateways.webservice.ig.dati.BeanInvioEsito"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+  
+  
+ <ns1:transport name="http">
+  <ns1:requestFlow>
+   <ns1:handler type="URLMapper"/>
+   <ns1:handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+  </ns1:requestFlow>
+  <ns1:parameter name="qs:list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs:wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+  <ns1:parameter name="qs.list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs.method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs:method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs.wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+ </ns1:transport>
+ <ns1:transport name="local">
+  <ns1:responseFlow>
+   <ns1:handler type="LocalResponder"/>
+  </ns1:responseFlow>
+ </ns1:transport>
+</ns1:deployment>

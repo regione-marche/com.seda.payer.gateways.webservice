@@ -1,0 +1,58 @@
+package com.seda.payer.gateways.webservice.config;
+
+import java.text.MessageFormat;
+import java.util.ResourceBundle;
+
+public enum PropKeys {
+	DEFAULT_NODE,
+	COMMONS_ENDPOINTURL,
+	//PG150180_001 GG - inizio
+	WSMIP_ENDPOINTURL,
+	WSCONFIGUTENTETIPOSERVIZIOENTE_ENDPOINTURL,
+	WSENTE_ENDPOINTURL,
+	WSANAGENTE_ENDPOINURL,
+	//PG150180_001 GG - fine
+	NOTIFICHE_ENDPOINTURL,
+	EMAILSENDER_ENDPOINTURL,
+	GATEWAYPAGAMENTO_ENDPOINTURL,
+	FLOW_PATH,
+	FLOW_IN_PROGRESS_PATH,
+	FLOW_PROCESSED_PATH,
+	FLOW_REJECTED_PATH,
+	UPDATE_TRA_PENDING_DAY_INT,
+	EMAIL_NOTIFY_TO_LIST,
+	EMAIL_NOTIFY_SUBJECT,
+	RID_URL,
+	RID_ARCHIVIAZIONE_URL,
+	RID_ARCHIVIAZIONE_NTERVALLO_ORE,
+	SETEFI_DTT_TYPE,
+	SETEFI_DTT_ALIAS,
+	SETEFI_DTT_PATH,
+	SETEFI_DTT_ACTION,
+	SETEFI_DTT_CURRENCYCODE,
+	SETEFI_DTT_UDF1,
+	SETEFI_DTT_RESULT,
+	
+	FLOW_RID_PDF_PATHINPUT,
+	FLOW_RID_PDF_PATHPROCESSED,
+	
+	INFOGROUP_DBSCHEMACODSOCIETA,
+	flagPaypal,
+	DESCRIZIONE_PAGAMENTO_PAYPAL,
+	DNS_IT,
+	DNS_DE,
+	DESC_CAUSALE_PAGAMENTO,
+	NODOSPCWS
+	
+	;
+
+    private static ResourceBundle rb;
+
+    public String format( Object... args ) {
+        synchronized(PropKeys.class) {
+            if(rb==null)
+            	rb = ResourceBundle.getBundle(PropKeys.class.getName());
+            return MessageFormat.format(rb.getString(name()),args);
+        }
+    }
+}

@@ -1,0 +1,354 @@
+package com.seda.payer.gateways.webservice.helper;
+
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+
+
+
+
+public class RedirectToGTWCartaSi implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private String numeroCommerciante; //
+	private String stabilimento;
+	private String userID;
+	private String password;
+	private String numeroOrdine;
+	private java.math.BigDecimal totaleOrdine;
+	private String valuta;
+	private String tipoPagamento;
+	private String flagDeposito;
+	private String urlOk;
+	private String urlKo;
+	private String tipoRispostaApv;
+	private java.lang.String flagRiciclaOrdine;
+	private java.lang.String causalePagamento;
+	private java.lang.String emailCompratore;
+	private java.lang.String langCompratore;
+
+	private String securityString;
+	private String strURL;
+	private String token;
+	private String tipoGateway;
+ 
+	
+	
+	
+	public RedirectToGTWCartaSi() {
+		
+	}
+	
+	
+	
+	
+	/**
+	 * @param numeroCommerciante
+	 * @param stabilimento
+	 * @param userID
+	 * @param password
+	 * @param numeroOrdine
+	 * @param totaleOrdine
+	 * @param valuta
+	 * @param tipoPagamento
+	 * @param flagDeposito
+	 * @param urlOk
+	 * @param urlKo
+	 * @param tipoRispostaApv
+	 * @param flagRiciclaOrdine
+	 * @param causalePagamento
+	 * @param emailCompratore
+	 * @param langCompratore
+	 */
+	public RedirectToGTWCartaSi(String numeroCommerciante,
+			String stabilimento, String userID, String password,
+			String numeroOrdine, BigDecimal totaleOrdine, String valuta,
+			String tipoPagamento, String flagDeposito, String urlOk,
+			String urlKo, String tipoRispostaApv, String flagRiciclaOrdine,
+			String causalePagamento, String emailCompratore,
+			String langCompratore, String securityString, String strURL, String token, String tipoGateway) {
+			
+		super();
+		this.numeroCommerciante = numeroCommerciante;
+		this.stabilimento = stabilimento;
+		this.userID = userID;
+		this.password = password;
+		this.numeroOrdine = numeroOrdine;
+		this.totaleOrdine = totaleOrdine;
+		this.valuta = valuta;
+		this.tipoPagamento = tipoPagamento;
+		this.flagDeposito = flagDeposito;
+		this.urlOk = urlOk;
+		this.urlKo = urlKo;
+		this.tipoRispostaApv = tipoRispostaApv;
+		this.flagRiciclaOrdine = flagRiciclaOrdine;
+		this.causalePagamento = causalePagamento;
+		this.emailCompratore = emailCompratore;
+		this.langCompratore = langCompratore;
+		this.securityString = securityString;
+		this.strURL = strURL;
+		this.token = token;
+		this.tipoGateway = tipoGateway;
+		
+	}
+
+	public String getUrl() throws NoSuchAlgorithmException {
+		System.out.println("inizio getUrl");
+	   String numeroRiferimentoOrdine=hashEncode(numeroOrdine);
+	   System.out.println("numeroRiferimentoOrdine = " + numeroRiferimentoOrdine);
+		totaleOrdine=totaleOrdine.multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_DOWN);
+		String stringaMAC = "codTrans=" +numeroRiferimentoOrdine
+		  + "divisa=" +valuta
+		  + "importo="+totaleOrdine.toString()+securityString;
+		MessageDigest md = MessageDigest.getInstance("SHA");
+		byte[] dataBytes = stringaMAC.getBytes();
+		md.update(dataBytes);
+		byte[] mdbytes = md.digest();
+
+		StringBuffer sb = new StringBuffer("");
+		for (int i = 0; i < mdbytes.length; i++) {
+			sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16)
+					.substring(1));
+		}
+       String sMacEncoded=sb.toString();
+ 	   String stringaURL = this.strURL + "?";
+	   String stringaFinaleUrl="";
+	   
+	   
+	  
+		try {
+			stringaFinaleUrl = stringaURL 
+			  + "alias=" + numeroCommerciante 
+			  + "&importo=" + totaleOrdine
+			  + "&divisa=" + valuta 
+			  + "&codTrans=" + URLEncoder.encode(numeroRiferimentoOrdine,"UTF-8") 
+			  + "&userID=" + userID
+			  + "&password=qualunque" 		         
+			  + "&flagDeposito=" + flagDeposito 
+			  + "&url=" + URLEncoder.encode(urlOk ,"UTF-8") 
+			  + "&url_back=" + URLEncoder.encode(urlKo ,"UTF-8") 
+			  + "&tipoRispostaApv=" + tipoRispostaApv 
+			  + "&flagRiciclaOrdine=" + flagRiciclaOrdine
+			  + "&stabilimento=" + stabilimento 
+			  + "&languageId="+langCompratore 
+			+ "&mac=" +  URLEncoder.encode(sMacEncoded,"UTF-8");
+			
+			System.out.println("stringaFinaleUrl = " + stringaFinaleUrl);
+			
+		} catch (UnsupportedEncodingException e) {
+			System.out.println("(e.printStackTrace()" + e.getMessage());
+			e.printStackTrace();
+		}
+		return stringaFinaleUrl;
+	}
+	
+	private String hashEncode(String cTran) {
+		String shaKey="";
+	    try {
+			MessageDigest md = MessageDigest.getInstance("SHA");
+			byte[] dataBytes = cTran.getBytes("UTF-8");
+			md.update(dataBytes);
+			byte[] mdbytes = md.digest();
+			shaKey=Base64.encode(mdbytes);
+		} catch (NoSuchAlgorithmException e) {
+			System.out.println("Si sono verificati problemi nella generazione del codice hask associato alla chiave della transazione");
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return shaKey;
+	}
+
+	
+	public static Calendar StringToCalender(String datai) {
+		try {
+			
+			DateFormat formatter;
+			Date date;
+			formatter = new SimpleDateFormat("dd-MMM-yy");
+			date = (Date) formatter.parse(datai);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			return cal;
+		} catch (ParseException e) {
+			System.out.println("Exception :" + e);
+		}
+		return null;
+	}
+	
+	private String impToString(BigDecimal importo) {
+		return importo.toString().replace(" ", "0").replace(".", "").replace(",", "");
+	}
+			
+	public String getNumeroCommerciante() {
+		return numeroCommerciante;
+	}
+
+	public void setNumeroCommerciante(String numeroCommerciante) {
+		this.numeroCommerciante = numeroCommerciante;
+	}
+
+	public String getStabilimento() {
+		return stabilimento;
+	}
+
+	public void setStabilimento(String stabilimento) {
+		this.stabilimento = stabilimento;
+	}
+
+	public String getUserID() {
+		return userID;
+	}
+
+	public void setUserID(String userID) {
+		this.userID = userID;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getNumeroOrdine() {
+		return numeroOrdine;
+	}
+
+	public void setNumeroOrdine(String numeroOrdine) {
+		this.numeroOrdine = numeroOrdine;
+	}
+
+	public java.math.BigDecimal getTotaleOrdine() {
+		return totaleOrdine;
+	}
+
+	public void setTotaleOrdine(java.math.BigDecimal totaleOrdine) {
+		this.totaleOrdine = totaleOrdine;
+	}
+
+	public String getValuta() {
+		return valuta;
+	}
+
+	public void setValuta(String valuta) {
+		this.valuta = valuta;
+	}
+
+	public String getTipoPagamento() {
+		return tipoPagamento;
+	}
+
+	public void setTipoPagamento(String tipoPagamento) {
+		this.tipoPagamento = tipoPagamento;
+	}
+
+	public String getFlagDeposito() {
+		return flagDeposito;
+	}
+
+	public void setFlagDeposito(String flagDeposito) {
+		this.flagDeposito = flagDeposito;
+	}
+
+	public String getUrlOk() {
+		return urlOk;
+	}
+
+	public void setUrlOk(String urlOk) {
+		this.urlOk = urlOk;
+	}
+
+	public String getUrlKo() {
+		return urlKo;
+	}
+
+	public void setUrlKo(String urlKo) {
+		this.urlKo = urlKo;
+	}
+
+	public String getTipoRispostaApv() {
+		return tipoRispostaApv;
+	}
+
+	public void setTipoRispostaApv(String tipoRispostaApv) {
+		this.tipoRispostaApv = tipoRispostaApv;
+	}
+
+	public java.lang.String getFlagRiciclaOrdine() {
+		return flagRiciclaOrdine;
+	}
+
+	public void setFlagRiciclaOrdine(java.lang.String flagRiciclaOrdine) {
+		this.flagRiciclaOrdine = flagRiciclaOrdine;
+	}
+
+	public java.lang.String getCausalePagamento() {
+		return causalePagamento;
+	}
+
+	public void setCausalePagamento(java.lang.String causalePagamento) {
+		this.causalePagamento = causalePagamento;
+	}
+
+	public java.lang.String getEmailCompratore() {
+		return emailCompratore;
+	}
+
+	public void setEmailCompratore(java.lang.String emailCompratore) {
+		this.emailCompratore = emailCompratore;
+	}
+
+	public java.lang.String getLangCompratore() {
+		return langCompratore;
+	}
+
+	public void setLangCompratore(java.lang.String langCompratore) {
+		this.langCompratore = langCompratore;
+	}
+
+	public String getSecurityString() {
+		return securityString;
+	}
+
+	public void setSecurityString(String securityString) {
+		this.securityString = securityString;
+	}
+
+	public void setStrURL(String strURL) {
+		this.strURL = strURL;
+	}
+
+	public String getStrURL() {
+		return strURL;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setTipoGateway(String tipoGateway) {
+		this.tipoGateway = tipoGateway;
+	}
+
+	public String getTipoGateway() {
+		return tipoGateway;
+	}
+	
+}
