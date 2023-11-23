@@ -3,10 +3,9 @@ package com.seda.payer.gateways.facade.handler;
 import java.sql.Connection;
 import java.util.Properties;
 
-import org.apache.log4j.Hierarchy;
-import org.apache.log4j.Logger;
 
-import com.seda.commons.logger.LoggerHierarchyServer;
+import com.seda.commons.logger.CustomLoggerManager;
+import com.seda.commons.logger.LoggerWrapper;
 import com.seda.commons.properties.tree.PropertiesTree;
 import com.seda.compatibility.SystemVariable;
 import com.seda.data.dao.DAOHelper;
@@ -14,6 +13,7 @@ import com.seda.emailsender.webservices.srv.EMailSenderFaultType;
 import com.seda.j2ee5.jndi.JndiProxy;
 import com.seda.j2ee5.jndi.JndiProxyException;
 import com.seda.payer.gateways.facade.ws.EMailSender;
+import com.seda.payer.gateways.webservice.handler.WebServiceHandler;
 
 
 public abstract class BaseFacadeHandler {
@@ -24,7 +24,7 @@ public abstract class BaseFacadeHandler {
 	private String wsCommonsUrl;
 	private String wsLogRequest = "";
 	
-	protected Logger logger;
+	protected LoggerWrapper logger = CustomLoggerManager.get(BaseFacadeHandler.class);
 
 	protected PropertiesTree propertiesTree;
 	//inizio LP PG200070 - 20200812
@@ -77,7 +77,7 @@ public abstract class BaseFacadeHandler {
 //            LoggerHierarchyServer loggerHierarchyServer = new LoggerHierarchyServer();
 //            Hierarchy hierarchy = loggerHierarchyServer.configure(log4jConfiguration);
             
-            logger = Logger.getLogger("FILE");
+            
             logger.info("<com.seda.payer.facade - applicationStartup()>");
 		}
 		catch(EMailSenderFaultType e)

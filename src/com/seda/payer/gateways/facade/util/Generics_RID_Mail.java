@@ -2,8 +2,9 @@ package com.seda.payer.gateways.facade.util;
 
 import java.net.URL;
 
-import org.apache.log4j.Logger;
 
+
+import com.seda.commons.logger.LoggerWrapper;
 import com.seda.commons.properties.tree.PropertiesTree;
 import com.seda.payer.gateways.facade.dto.RidDto;
 import com.seda.payer.gateways.facade.handler.PropertiesPath;
@@ -46,7 +47,7 @@ public class Generics_RID_Mail {
 	 * @return
 	 */
 	public static boolean notificaRID(FUNZIONE funzione, INVIO invio, TIPO tipo, 
-			RidDto ridFacade, PropertiesTree env, Logger logger,
+			RidDto ridFacade, PropertiesTree env, LoggerWrapper logger,
 			String dbSchemaCodSocieta)
 	{
 		String operFunzione = "";
@@ -131,7 +132,7 @@ public class Generics_RID_Mail {
 	
 	public static boolean notificaRID_CBI(
 			String chiaveTransazione, String codiceCausaleAEA, String descrizioneCausaleAEA,
-			PropertiesTree propertiesTree, Logger logger, String dbSchemaCodSocieta)
+			PropertiesTree propertiesTree, LoggerWrapper logger, String dbSchemaCodSocieta)
 	{
 		try
 		{
@@ -168,7 +169,7 @@ public class Generics_RID_Mail {
 		}
 	}
 	
-	public static boolean generaAndSendMail(EMailSender eMailSender, RidDto ridFacade, String sObject, String sText, Logger logger)
+	public static boolean generaAndSendMail(EMailSender eMailSender, RidDto ridFacade, String sObject, String sText, LoggerWrapper logger)
 	{
 		if (eMailSender!=null && ridFacade.getMailSottoscrittore() != null && ridFacade.getMailSottoscrittore().length()!=0)
 		{

@@ -309,6 +309,7 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 	
 	protected String template="";
 	
+	
 	protected void initConfig() {
 		flowPath = propertiesTree().getProperty(PropKeys.FLOW_PATH.format(PropKeys.DEFAULT_NODE.format()));
 		flowInProgressPath = propertiesTree().getProperty(PropKeys.FLOW_IN_PROGRESS_PATH.format(PropKeys.DEFAULT_NODE.format()));
@@ -534,7 +535,7 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 				if (response.getCodiceEsito().equalsIgnoreCase(Generics_RID.S2S_OK))
 				{
 					// fare il download del file e salvare il file
-					if (GatewaysIGHelper.gestisciMAVPostS2S(gtwigRequest, response, propertiesTree(), loggerServer(), dbSchemaCodSocieta))
+					if (GatewaysIGHelper.gestisciMAVPostS2S(gtwigRequest, response, propertiesTree(), LOG, dbSchemaCodSocieta))
 					{				
 						// gestire il download del MAV all'utente con un write nella pagina lato web
 						apiRedirect = "";//response.getUrlStrumPag();
@@ -1590,7 +1591,7 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 						rptNodoSpc.setIdCanalePSP(idCanale);
 						//31012017 GG - fine
 						
-						//					String codiceIuv = NodoSpcHelper.inserisciRPT(propertiesTree(), loggerServer(), dbSchemaCodSocieta, rptNodoSpc);
+						//					String codiceIuv = NodoSpcHelper.inserisciRPT(propertiesTree(), LOG, dbSchemaCodSocieta, rptNodoSpc);
 						//					rptNodoSpc.setCodiceIuv(codiceIuv);
 						
 						String chiaveEnte = "";
@@ -1729,7 +1730,7 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 						
 						//01082016 GG PG160130 - spostato inserisciRPT dopo recupero idDominio - inizio
 						rptNodoSpc.setIdDominio(identificativoDominio);
-						String[] codici = NodoSpcHelper.inserisciRPT(propertiesTree(), loggerServer(), dbSchemaCodSocieta, rptNodoSpc);
+						String[] codici = NodoSpcHelper.inserisciRPT(propertiesTree(), LOG, dbSchemaCodSocieta, rptNodoSpc);
 						String strPaymentId = codici[0];
 						String codiceIuv = codici[1];
 						BigInteger paymentId = new BigInteger(strPaymentId);
@@ -1751,13 +1752,13 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 						//PG160230_001 GG 23112016 - fine	
 //PG170300 - 30/1/2018 - INIZIO - MODIFICATA LA COSTRUZIONE DELL'XML IN QUANTO IL TAG IMPORTO-SINGOLO-PAGAMENTO PUO' ESSERE MULTIPLO
 //						if (tipoPagamentoPoste) {
-//							rptXml = NodoSpcHelper.generaRPTXmlPoste(propertiesTree(), loggerServer(), "", identificativoDominio, identificativoStazioneIntermediarioPA, cfPagatore, nomePagatore, in.getEmailContribuente()
+//							rptXml = NodoSpcHelper.generaRPTXmlPoste(propertiesTree(), LOG, "", identificativoDominio, identificativoStazioneIntermediarioPA, cfPagatore, nomePagatore, in.getEmailContribuente()
 //									, cfEnteCreditore, nomeEnteCreditore, rptNodoSpc.getImporto(), codiceIuv, ibanAccredito, datiSpecificiRiscossione, tipoVersamento, codiceContestoPagamento, idBollettiniListForCausaleVersamento); 	//PG160230_001 GG 23112016
 //							rptNodoSpc.setRpt(rptXml);
 //							//Salvo RPT su db
 //						} else {
 //							//Creo RPT
-//							rptXml = NodoSpcHelper.generaRPTXml(propertiesTree(), loggerServer(), "", identificativoDominio, identificativoStazioneIntermediarioPA, cfPagatore, nomePagatore, in.getEmailContribuente()
+//							rptXml = NodoSpcHelper.generaRPTXml(propertiesTree(), LOG, "", identificativoDominio, identificativoStazioneIntermediarioPA, cfPagatore, nomePagatore, in.getEmailContribuente()
 //									, cfEnteCreditore, nomeEnteCreditore, rptNodoSpc.getImporto(), codiceIuv, ibanAccredito, datiSpecificiRiscossione, tipoVersamento, codiceContestoPagamento, idBollettiniListForCausaleVersamento);	//PG160230_001 GG 23112016
 //							rptNodoSpc.setRpt(rptXml);
 //							//Salvo RPT su db
@@ -1769,7 +1770,7 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 						System.out.println("Gateways - [riga 1739] - datiSpecificiRiscossione: "+datiSpecificiRiscossione);
 						if (tipoPagamentoPoste) {
 							rptXml = NodoSpcHelper.generaRPTXmlPoste(propertiesTree(), 
-									loggerServer(), 
+									LOG, 
 									"", 
 									identificativoDominio, 
 									identificativoStazioneIntermediarioPA, 
@@ -1799,7 +1800,7 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 						} else {
 							//Creo RPT
 							rptXml = NodoSpcHelper.generaRPTXml(propertiesTree(), 
-									loggerServer(), 
+									LOG, 
 									"", 
 									identificativoDominio, 
 									identificativoStazioneIntermediarioPA, 
@@ -1830,7 +1831,7 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 						rpt = rptXml.getBytes("UTF-8");
 						
 						//					//Creo RPT
-						//					String rptXml = NodoSpcHelper.generaRPTXml(propertiesTree(), loggerServer(), "", identificativoDominio, identificativoStazioneIntermediarioPA, cfPagatore, nomePagatore, in.getEmailContribuente()
+						//					String rptXml = NodoSpcHelper.generaRPTXml(propertiesTree(), LOG, "", identificativoDominio, identificativoStazioneIntermediarioPA, cfPagatore, nomePagatore, in.getEmailContribuente()
 						//							, cfEnteCreditore, nomeEnteCreditore, rptNodoSpc.getImporto(), codiceIuv, ibanAccredito, datiSpecificiRiscossione, tipoVersamento);
 						//					rptNodoSpc.setRpt(rptXml);
 						//					//Salvo RPT su db
@@ -4151,14 +4152,14 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 							rptNodoSpc.setCodiceIuv(codiceIuv);
 							codiceContestoPagamento = codiceContestoPagamentoExt;
 							rptNodoSpc.setCodContestoPagamento(codiceContestoPagamento);
-							String codice = NodoSpcHelper.inserisciRPTMB(propertiesTree(), loggerServer(), dbSchemaCodSocieta, rptNodoSpc);
+							String codice = NodoSpcHelper.inserisciRPTMB(propertiesTree(), LOG, dbSchemaCodSocieta, rptNodoSpc);
 							String strPaymentId = codice;
 							paymentId = new BigInteger(strPaymentId);
 							System.out.println("riga 3988 paymentId = " + paymentId);
 							rptNodoSpc.setId(paymentId);
 						} else {
 						//fine LP PG210130 Step04
-						String[] codici = NodoSpcHelper.inserisciRPT(propertiesTree(), loggerServer(), dbSchemaCodSocieta, rptNodoSpc);
+						String[] codici = NodoSpcHelper.inserisciRPT(propertiesTree(), LOG, dbSchemaCodSocieta, rptNodoSpc);
 						String strPaymentId = codici[0];
 						//inizio LP PG210130 Step04
 						//String codiceIuv = codici[1];
@@ -4188,7 +4189,7 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 								}
 								codiceContestoPagamento = identificativoDominio + numeroAvviso + "-" + miniiuv;
 								rptNodoSpc.setCodContestoPagamento(codiceContestoPagamento);
-								NodoSpcHelper.updateRPTMB(propertiesTree(), loggerServer(), dbSchemaCodSocieta, rptNodoSpc);
+								NodoSpcHelper.updateRPTMB(propertiesTree(), LOG, dbSchemaCodSocieta, rptNodoSpc);
 							}
 						}
 						//fine LP PG210130 Step04
@@ -4204,7 +4205,7 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 						
 						if (tipoPagamentoPoste) {
 							rptXml = NodoSpcHelper.generaRPTXmlPoste(propertiesTree(), 
-																	 loggerServer(), 
+																	 LOG, 
 																	 "", 
 																	 identificativoDominio, 
 																	 identificativoStazioneIntermediarioPA, 
@@ -4233,7 +4234,7 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 						} else {
 							//Creo RPT
 							rptXml = NodoSpcHelper.generaRPTXml(propertiesTree(), 
-									                            loggerServer(), 
+									                            LOG, 
 									                            "", 
 									                            identificativoDominio, 
 									                            identificativoStazioneIntermediarioPA, 
@@ -4550,13 +4551,13 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 					info("process.FILE - " + pathFullFileToElab);
 
 					// we allign transactions
-					//isWasAlligned = GatewaysIGHelper.allineaTransazioniIG(pathFullFileToElab, propertiesTree(), loggerServer());
+					//isWasAlligned = GatewaysIGHelper.allineaTransazioniIG(pathFullFileToElab, propertiesTree(), LOG);
 					
 					try{
 						//we allign transactions
 						//inizio LP PG200070 - 20200812
-						//isWasAlligned = GatewaysIGHelper.allineaTransazioniIG(pathFullFileToElab, fileNameToElab, propertiesTree(), loggerServer(), dbSchemaCodSocieta);
-						isWasAlligned = GatewaysIGHelper.allineaTransazioniIG(pathFullFileToElab, fileNameToElab, propertiesTree(), loggerServer(), dbSchemaCodSocieta);
+						//isWasAlligned = GatewaysIGHelper.allineaTransazioniIG(pathFullFileToElab, fileNameToElab, propertiesTree(), LOG, dbSchemaCodSocieta);
+						isWasAlligned = GatewaysIGHelper.allineaTransazioniIG(pathFullFileToElab, fileNameToElab, propertiesTree(), LOG, dbSchemaCodSocieta);
 						//fine LP PG200070 - 20200812
 					}
 					catch (Exception e)
@@ -4939,14 +4940,13 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 		            return new RedirectToGTWPagOnlineResponse(new ResponseType(ResponseTypeRetCode.value2, "Generic Error : Elaborazione diversa da batch e online"));
 		           
 				} catch (Exception ex) {
-					info("allineaTransazionePagOnline failed - generic error due to: ", ex);
-					error("allineaTransazionePagOnline failed - generic error due to: ", ex);
+					LOG.error("allineaTransazionePagOnline failed - generic error due to: ", ex);
 					ex.printStackTrace();
 					return new RedirectToGTWPagOnlineResponse(new ResponseType(ResponseTypeRetCode.value2, "Generic Error "));
 				}
 				catch (Throwable ex) {
-						info("allineaTransazionePagOnline failed - generic error due to: ", ex);
-						error("allineaTransazionePagOnline failed - generic error due to: ", ex);
+					LOG.error("allineaTransazionePagOnline failed - generic error due to: ", ex);
+					LOG.error("allineaTransazionePagOnline failed - generic error due to: ", ex);
 						ex.printStackTrace();
 						return new RedirectToGTWPagOnlineResponse(new ResponseType(ResponseTypeRetCode.value2, "Generic Error "));
 				}
@@ -5078,7 +5078,7 @@ private RedirectToGTWPagOnlineResponse allineaTransazioneMyBank(AllineaTransazio
 		            return new RedirectToGTWPagOnlineResponse(new ResponseType(ResponseTypeRetCode.value2, "Generic Error : Elaborazione diversa da batch e online"));
 		           
 				} catch (Exception ex) {
-					error("allineaTransazionePagOnline failed - generic error due to: ", ex);
+					LOG.error("allineaTransazionePagOnline failed - generic error due to: ", ex);
 					ex.printStackTrace();
 					return new RedirectToGTWPagOnlineResponse(new ResponseType(ResponseTypeRetCode.value2, "Generic Error "));
 				}
@@ -7565,7 +7565,7 @@ private RedirectToGTWPagOnlineResponse allineaTransazioneSatispay(AllineaTransaz
             info("redirectToGTWIG infogroup http response - " + response);
             String xmlText = response.substring(response.indexOf("=")+1);
 			info("redirectToGTWIG infogroup http xml response - " + xmlText);
-			return RedirectToGTWIGResponse.parse(xmlText, loggerServer());
+			return RedirectToGTWIGResponse.parse(xmlText, LOG);
 
 		} catch (Exception ex) {
 			error("redirectToGTWIG failed - generic error due to: ", ex);
@@ -7635,7 +7635,7 @@ private RedirectToGTWPagOnlineResponse allineaTransazioneSatispay(AllineaTransaz
 	            info("richiediStornoS2S http response - " + response);
 	            
 	            String xmlText = response.substring(response.indexOf("=")+1);
-	            return RedirectToGTWIGResponse.parseStorno(xmlText, loggerServer());
+	            return RedirectToGTWIGResponse.parseStorno(xmlText, LOG);
             } else
             	return new RedirectToGTWIGResponse(null, "-1", "Errore nella chiamata S2S: HTTP Return code " + returnCode, null);
             
@@ -7698,7 +7698,7 @@ private RedirectToGTWPagOnlineResponse allineaTransazioneSatispay(AllineaTransaz
             String xmlText = response.substring(response.indexOf("=")+1);
 			info("redirectToGTWPagoInConto infogroup http xml response - " + xmlText);
 			
-			return RedirectToGTWIGResponse.parse(xmlText, loggerServer());
+			return RedirectToGTWIGResponse.parse(xmlText, LOG);
 
 		} catch (Exception ex) {
 			error("redirectToGTWIG failed - generic error due to: ", ex);
@@ -7763,7 +7763,7 @@ private RedirectToGTWPagOnlineResponse allineaTransazioneSatispay(AllineaTransaz
 			info("redirectToGTWRidOnLine infogroup http xml response - " + xmlText);
 			
 			// risposta S2S concentratore --> payer (accettazione RID) ritorna URL per la conferma dell'utente 
-            return RedirectToGTWIGResponse.parseRidOnLine(xmlText, returnCode, loggerServer());
+            return RedirectToGTWIGResponse.parseRidOnLine(xmlText, returnCode, LOG);
 
 		} catch (Exception ex) {
 			error("redirectToGTWIG redirectToGTWRidOnLine failed - generic error due to: ", ex);
@@ -7828,7 +7828,7 @@ private RedirectToGTWPagOnlineResponse allineaTransazioneSatispay(AllineaTransaz
 			info("redirectToGTWMavOnLine infogroup http xml response - " + xmlText);
 			
 			// risposta S2S concentratore --> payer (accettazione MAV) NON ritorna URL per la conferma dell'utente 
-            return RedirectToGTWIGResponse.parseMavOnLine(xmlText, returnCode, loggerServer());
+            return RedirectToGTWIGResponse.parseMavOnLine(xmlText, returnCode, LOG);
 
 		} catch (Exception ex) {
 			error("redirectToGTWIG redirectToGTWMavOnLine failed - generic error due to: ", ex);
@@ -8684,11 +8684,11 @@ private RedirectToGTWPagOnlineResponse allineaTransazioneSatispay(AllineaTransaz
 			RidDto ridFacade = Generics_RID_WS.convertRID(in, idOperation);
 			if (ridFacade != null)
 			{
-				Generics_RID_WS.saveNewAdesioneRevoca(service, ridFacade, loggerServer(), dbSchemaCodSocieta);
+				Generics_RID_WS.saveNewAdesioneRevoca(service, ridFacade, LOG, dbSchemaCodSocieta);
 				
 				// chiamata al S2S di Infogroup
 				String[] sReturnCode_Desc_XmlResponse = sendRidGenericS2S("initServizio", GenericsGTW.xmlTextRID_Adesione(in, idOperation));
-				String[] sReturnCode_Desc_S2SResponse = GenericsGTW.parseRidAdesione(resp, sReturnCode_Desc_XmlResponse[1], loggerServer());
+				String[] sReturnCode_Desc_S2SResponse = GenericsGTW.parseRidAdesione(resp, sReturnCode_Desc_XmlResponse[1], LOG);
 				
 				// setto i nuovi parametri arrivati dalla response
 				Generics_RID_WS.modifyRID(sReturnCode_Desc_S2SResponse, sReturnCode_Desc_XmlResponse, ridFacade);
@@ -8744,11 +8744,11 @@ private RedirectToGTWPagOnlineResponse allineaTransazioneSatispay(AllineaTransaz
 			{				
 				// cancello il vecchio record dell'utente e ne genero uno nuovo per la revoca con i campi aggiornati
 				Generics_RID_WS.convertRID(in, idOperation, ridFacade);
-				Generics_RID_WS.saveNewAdesioneRevoca(service, ridFacade, loggerServer(),dbSchemaCodSocieta);
+				Generics_RID_WS.saveNewAdesioneRevoca(service, ridFacade, LOG,dbSchemaCodSocieta);
 				
 				// chiamata al S2S di Infogroup
 				String[] sReturnCode_Desc_XmlResponse = sendRidGenericS2S("initServizio", GenericsGTW.xmlTextRID_Revoca(in, idOperation));
-				String[] sReturnCode_Desc_S2SResponse = GenericsGTW.parseRidRevoca(resp, sReturnCode_Desc_XmlResponse[1], loggerServer());
+				String[] sReturnCode_Desc_S2SResponse = GenericsGTW.parseRidRevoca(resp, sReturnCode_Desc_XmlResponse[1], LOG);
 				
 				// setto i nuovi parametri arrivati dalla response
 				Generics_RID_WS.modifyRID(sReturnCode_Desc_S2SResponse, sReturnCode_Desc_XmlResponse, ridFacade);
@@ -8972,7 +8972,7 @@ private RedirectToGTWPagOnlineResponse allineaTransazioneSatispay(AllineaTransaz
 //	    	info("allineaRIDArchiviazione: Request execute");	
 //			
 //	    	// allineo l'archiviazione dei file
-//	    	String[] sRes = Generics_RID_AllineaPDF.manageAllineaRID_PDF(propertiesTree(), loggerServer());			
+//	    	String[] sRes = Generics_RID_AllineaPDF.manageAllineaRID_PDF(propertiesTree(), LOG);			
 //			// parametri della response uguali alla request
 //			resp.setRetCode(sRes[0]);
 //			resp.setRetMessage(sRes[1]);				
@@ -9121,7 +9121,7 @@ private RedirectToGTWPagOnlineResponse allineaTransazioneSatispay(AllineaTransaz
     	service.sendRIDMailAdesioneRevoca(ridFacade, "000TO");
 
     	// la transazione è MAV è gestita all'interno 
-		//GatewaysIGHelper.allineaTransazioneIG("test", "250611", "d579208b-db5a-4e02-973e-3e7e4a2f1ada", "idOperazione", "0000000005000", "nome_file_RNINCATRANS",  propertiesTree(), loggerServer());
+		//GatewaysIGHelper.allineaTransazioneIG("test", "250611", "d579208b-db5a-4e02-973e-3e7e4a2f1ada", "idOperazione", "0000000005000", "nome_file_RNINCATRANS",  propertiesTree(), LOG);
 		
     	
     }

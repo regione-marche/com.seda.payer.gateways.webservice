@@ -30,7 +30,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.seda.commons.logger.LoggerServer;
+import com.seda.commons.logger.LoggerWrapper;
 import com.seda.commons.string.Convert;
 import com.seda.j2ee5.maf.defender.rule.Regex;
 import com.seda.payer.gateways.webservice.dati.ResponseType;
@@ -259,7 +259,7 @@ public class RedirectToGTWPagOnlineResponse implements Serializable {
 	}
 	
 	
-	static String getParamsXmlString (Document doc, LoggerServer log ){
+	static String getParamsXmlString (Document doc, LoggerWrapper log ){
 		try
 		{
 			//lettura docIntero

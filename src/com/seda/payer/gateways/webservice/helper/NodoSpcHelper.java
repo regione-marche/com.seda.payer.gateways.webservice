@@ -22,7 +22,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.seda.commons.logger.LoggerServer;
+import com.seda.commons.logger.LoggerWrapper;
 import com.seda.commons.properties.tree.PropertiesTree;
 import com.seda.payer.commons.utility.DateUtility;
 import com.seda.payer.gateways.webservice.config.PropKeys;
@@ -78,7 +78,7 @@ public class NodoSpcHelper {
 	 * @return
 	 * @throws Exception 
 	 */
-	public static String[] inserisciRPT( PropertiesTree env, LoggerServer log, String dbSchemaCodSocieta, RptNodoSpc rptNodoSpc) throws Exception {
+	public static String[] inserisciRPT( PropertiesTree env, LoggerWrapper log, String dbSchemaCodSocieta, RptNodoSpc rptNodoSpc) throws Exception {
 		String[] outCode = new String[2];
 		outCode[0] = "";
 		outCode[1] = "";
@@ -115,7 +115,7 @@ public class NodoSpcHelper {
 	}
 
 	//inizio LP PG210130 Step04
-	public static String inserisciRPTMB( PropertiesTree env, LoggerServer log, String dbSchemaCodSocieta, RptNodoSpc rptNodoSpc) throws Exception {
+	public static String inserisciRPTMB( PropertiesTree env, LoggerWrapper log, String dbSchemaCodSocieta, RptNodoSpc rptNodoSpc) throws Exception {
 		String outCode = "";
 		try {
 			CommonsSOAPBindingStub commonsInterface = NodoSpcHelper.getCommonsManager(env, dbSchemaCodSocieta);
@@ -145,7 +145,7 @@ public class NodoSpcHelper {
 		return outCode;
 	}
 
-	public static void updateRPTMB(PropertiesTree env, LoggerServer log, String dbSchemaCodSocieta, RptNodoSpc rptNodoSpc) throws Exception {
+	public static void updateRPTMB(PropertiesTree env, LoggerWrapper log, String dbSchemaCodSocieta, RptNodoSpc rptNodoSpc) throws Exception {
 		try {
 			CommonsSOAPBindingStub commonsInterface = NodoSpcHelper.getCommonsManager(env, dbSchemaCodSocieta);
 			String codSocieta = "";
@@ -161,10 +161,10 @@ public class NodoSpcHelper {
 	
 	//PG160230_001 GG 23112016 Introdotto idBollettiniList
 //PG170300 - 30/1/2018 - INIZIO - MODIFICATA LA COSTRUZIONE DELL'XML IN QUANTO IL TAG IMPORTO-SINGOLO-PAGAMENTO PUO' ESSERE MULTIPLO
-//		public static String generaRPTXml(PropertiesTree env, LoggerServer log, String codSocieta, String identificativoDominio, String identificativoStazioneRichiedente, String cfPagatore,
+//		public static String generaRPTXml(PropertiesTree env, LoggerWrapper log, String codSocieta, String identificativoDominio, String identificativoStazioneRichiedente, String cfPagatore,
 //				String nomePagatore, String emailPagatore, String cfEnteCreditore, String nomeEnteCreditore, BigDecimal importo, String iuv,
 //				String ibanAccredito, String datiSpecificiRiscossione, String tipoVersamento, String codiceContestoPagamento, String idBollettiniList) {
-		public static String generaRPTXml(PropertiesTree env, LoggerServer log, String codSocieta, String identificativoDominio, String identificativoStazioneRichiedente, String cfPagatore,
+		public static String generaRPTXml(PropertiesTree env, LoggerWrapper log, String codSocieta, String identificativoDominio, String identificativoStazioneRichiedente, String cfPagatore,
 				String nomePagatore, String emailPagatore, String cfEnteCreditore, String nomeEnteCreditore, BigDecimal importo, String iuv,
 				String ibanAccredito, String datiSpecificiRiscossione, String tipoVersamento, String codiceContestoPagamento, String idBollettiniList,
 				List<RptNodoSpcDatiPagamenti> listRptDatiPagamenti,
@@ -631,10 +631,10 @@ public class NodoSpcHelper {
 	}
 	//PG160230_001 GG 23112016 Introdotto idBollettiniList
 //PG170300 - 30/1/2018 - INIZIO - MODIFICATA LA COSTRUZIONE DELL'XML IN QUANTO IL TAG IMPORTO-SINGOLO-PAGAMENTO PUO' ESSERE MULTIPLO
-//	public static String generaRPTXmlPoste(PropertiesTree env, LoggerServer log, String codSocieta, String identificativoDominio, String identificativoStazioneRichiedente, String cfPagatore,
+//	public static String generaRPTXmlPoste(PropertiesTree env, LoggerWrapper log, String codSocieta, String identificativoDominio, String identificativoStazioneRichiedente, String cfPagatore,
 //			String nomePagatore, String emailPagatore, String cfEnteCreditore, String nomeEnteCreditore, BigDecimal importo, String iuv,
 //			String ibanAccredito, String datiSpecificiRiscossione, String tipoVersamento, String codiceContestoPagamento, String idBollettiniList) {
-	public static String generaRPTXmlPoste(PropertiesTree env, LoggerServer log, String codSocieta, String identificativoDominio, String identificativoStazioneRichiedente, String cfPagatore,
+	public static String generaRPTXmlPoste(PropertiesTree env, LoggerWrapper log, String codSocieta, String identificativoDominio, String identificativoStazioneRichiedente, String cfPagatore,
 			String nomePagatore, String emailPagatore, String cfEnteCreditore, String nomeEnteCreditore, BigDecimal importo, String iuv,
 			String ibanAccredito, String datiSpecificiRiscossione, String tipoVersamento, String codiceContestoPagamento, String idBollettiniList,
 			List<RptNodoSpcDatiPagamenti> listRptDatiPagamenti,
@@ -1327,7 +1327,7 @@ public class NodoSpcHelper {
 	}
 
 
-	public static String generaERXml(PropertiesTree env, LoggerServer log, String codSocieta, String versioneOggetto, String dominio,
+	public static String generaERXml(PropertiesTree env, LoggerWrapper log, String codSocieta, String versioneOggetto, String dominio,
 			String identificativoDominio, String identificativoMessaggioEsito, String riferimentoMessaggioRevoca,
 			String riferimentoDataRevoca, String istitutoMittente, String soggettoPagatore, BigDecimal importo,
 			String iuv, String codiceContestoPagamento, String identificativoUnivocoRiscossione,

@@ -50,7 +50,7 @@ public class GatewaysIG extends WebServiceHandler implements com.seda.payer.gate
 			CommonsSOAPBindingStub binding = GatewaysIGHelper.getCommonsManager(propertiesTree(), dbSchemaCodSocieta);
 			// we retrieve beanTransazioni
 			TransazioniBeanTransazioni beanTransazioni = null;
-			try { beanTransazioni = GatewaysIGHelper.recuperaTransazione(binding, in, loggerServer());
+			try { beanTransazioni = GatewaysIGHelper.recuperaTransazione(binding, in, LOG);
 			} catch (Exception e) { throw new Exception("Errore nel recupero della transazione"); }
 
 			if (beanTransazioni.getChiave_transazione() == null)
@@ -58,10 +58,10 @@ public class GatewaysIG extends WebServiceHandler implements com.seda.payer.gate
 
 			// we retrieve urlRedirectQuietanza 
 			//inizio LP PG200070
-			//String urlRedirectQuietanza = GatewaysIGHelper.getUrlRedirectQuietanza(beanTransazioni.getChiave_gateway_di_pagamento(), env, loggerServer(), dbSchemaCodSocieta);
+			//String urlRedirectQuietanza = GatewaysIGHelper.getUrlRedirectQuietanza(beanTransazioni.getChiave_gateway_di_pagamento(), env, LOG, dbSchemaCodSocieta);
 			//inizio LP PG200070 - 20200812
-			//String urlRedirectQuietanza = GatewaysIGHelper.getUrlRedirectQuietanza(beanTransazioni.getChiave_gateway_di_pagamento(), loggerServer(), dbSchemaCodSocieta);
-			String urlRedirectQuietanza = GatewaysIGHelper.getUrlRedirectQuietanza(beanTransazioni.getChiave_gateway_di_pagamento(), loggerServer(), dbSchemaCodSocieta, configuration);
+			//String urlRedirectQuietanza = GatewaysIGHelper.getUrlRedirectQuietanza(beanTransazioni.getChiave_gateway_di_pagamento(), LOG, dbSchemaCodSocieta);
+			String urlRedirectQuietanza = GatewaysIGHelper.getUrlRedirectQuietanza(beanTransazioni.getChiave_gateway_di_pagamento(), LOG, dbSchemaCodSocieta, configuration);
 			//fine LP PG200070 - 20200812
 			//fine LP PG200070
 			
@@ -73,7 +73,7 @@ public class GatewaysIG extends WebServiceHandler implements com.seda.payer.gate
 				// e sull'allineaTransazione vengono aggiornati i valori specifici di pagamento del MAV
 				
 				// we update transaction
-				try { GatewaysIGHelper.aggiornaTransazione(beanTransazioni, in, binding, loggerServer());
+				try { GatewaysIGHelper.aggiornaTransazione(beanTransazioni, in, binding, LOG);
 				} catch (Exception e) {
 					error("aggiornaTransazione failed, generic error due to: ", e);
 					throw new Exception("Allineamento, modalità " + in.getTipoChiamata() 

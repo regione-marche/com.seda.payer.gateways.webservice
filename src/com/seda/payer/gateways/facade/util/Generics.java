@@ -7,7 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import org.apache.log4j.Logger;
+import com.seda.commons.logger.LoggerWrapper;
+
+
 
 public class Generics {
 
@@ -39,7 +41,7 @@ public class Generics {
 		return false;
 	}
 	
-	public static Integer getIntFromString(String sInt, Logger logger)
+	public static Integer getIntFromString(String sInt, LoggerWrapper logger)
 	{	
 		try
 		{

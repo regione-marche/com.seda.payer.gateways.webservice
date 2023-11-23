@@ -2,6 +2,7 @@ package com.seda.payer.gateways.webservice.helper;
 
 import java.rmi.RemoteException;
 
+import com.seda.commons.logger.LoggerWrapper;
 import com.seda.payer.gateways.facade.bean.GatewayPagamentoBean;
 import com.seda.payer.gateways.facade.dto.RidDto;
 import com.seda.payer.gateways.facade.exception.FacadeException;
@@ -28,7 +29,7 @@ public class Generics_RID_WS {
     	resp.setFlagAbilitazioneRID(bFlagAbilitaRID ? YES : NO);
     	
 	}
-    public static void saveNewAdesioneRevoca(GatewayPagamentoBean service, RidDto ridFacade, com.seda.commons.logger.LoggerServer log, String dbSchemaCodSocieta) throws RemoteException, FacadeException
+    public static void saveNewAdesioneRevoca(GatewayPagamentoBean service, RidDto ridFacade, LoggerWrapper log, String dbSchemaCodSocieta) throws RemoteException, FacadeException
     {
     	// cancello il vecchio record dell'utente
     	service.delRID(ridFacade.getCodiceDebitore(), dbSchemaCodSocieta);

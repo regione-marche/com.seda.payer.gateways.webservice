@@ -12,7 +12,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.seda.commons.logger.LoggerServer;
+import com.seda.commons.logger.LoggerWrapper;
 import com.seda.commons.string.Convert;
 
 public class RedirectToGTWIGResponse implements Serializable {
@@ -107,7 +107,7 @@ public class RedirectToGTWIGResponse implements Serializable {
 				"codiceEsito = " + codiceEsito + ", descrizioneEsito = " + descrizioneEsito + " ]";
 	}
 
-	public static RedirectToGTWIGResponse parse(String xmlText, LoggerServer log) throws Exception {
+	public static RedirectToGTWIGResponse parse(String xmlText, LoggerWrapper log) throws Exception {
 		//DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         //DocumentBuilder db = dbf.newDocumentBuilder();
         //InputSource is = new InputSource();
@@ -166,7 +166,7 @@ public class RedirectToGTWIGResponse implements Serializable {
 	}
 	
 	
-	public static RedirectToGTWIGResponse parseStorno(String xmlText, LoggerServer log) throws Exception {
+	public static RedirectToGTWIGResponse parseStorno(String xmlText, LoggerWrapper log) throws Exception {
 			
 		Document doc=GenericsXml.getXmlDocumentFromString(xmlText);
         
@@ -185,7 +185,7 @@ public class RedirectToGTWIGResponse implements Serializable {
 	}
 	
 	
-	public static RedirectToGTWIGResponse parseRidOnLine(String xmlText, int returnCode, LoggerServer log) throws Exception {
+	public static RedirectToGTWIGResponse parseRidOnLine(String xmlText, int returnCode, LoggerWrapper log) throws Exception {
 		
 		// fase di risposta dal gateway di pagamento per una RID
 		RedirectToGTWIGResponse response = new RedirectToGTWIGResponse();
@@ -223,7 +223,7 @@ public class RedirectToGTWIGResponse implements Serializable {
         return response;
 	}
 	
-	public static RedirectToGTWIGResponse parseMavOnLine(String xmlText, int returnCode, LoggerServer log) throws Exception 
+	public static RedirectToGTWIGResponse parseMavOnLine(String xmlText, int returnCode, LoggerWrapper log) throws Exception 
 	{		
 		// fase di risposta dal gateway di pagamento per una MAV
 		RedirectToGTWIGResponse response = new RedirectToGTWIGResponse();
@@ -249,7 +249,7 @@ public class RedirectToGTWIGResponse implements Serializable {
 		
         return response;
 	}
-	static String getParamsXmlString (Document doc, LoggerServer log ){
+	static String getParamsXmlString (Document doc, LoggerWrapper log ){
 		try
 		{
 			//lettura docIntero

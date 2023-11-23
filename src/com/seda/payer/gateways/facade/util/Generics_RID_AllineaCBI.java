@@ -19,8 +19,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
-
+import com.seda.commons.logger.LoggerWrapper;
 import com.seda.commons.properties.tree.PropertiesTree;
 import com.seda.emailsender.webservices.dati.EMailSenderRequestType;
 import com.seda.emailsender.webservices.dati.EMailSenderResponse;
@@ -65,7 +64,7 @@ public class Generics_RID_AllineaCBI {
 	
 	@SuppressWarnings("unchecked")
 	public static String[] manageAllineaCBI_FromFile(GatewayPagamentoBean facadeBean, 
-			PropertiesTree propertiesTree, Logger logger, StringBuffer testoMail, StringBuffer oggettoMail, String dbSchemaCodSocieta)
+			PropertiesTree propertiesTree, LoggerWrapper logger, StringBuffer testoMail, StringBuffer oggettoMail, String dbSchemaCodSocieta)
 	{
 		testoMail.append("Elaborazione flussi CBI (insoluti RID)<br>");
 		
@@ -207,7 +206,7 @@ public class Generics_RID_AllineaCBI {
 	 * @param logger
 	 * @return
 	 */
-	private static boolean parseFileCBI(String pathFullFileToElab, StringBuffer testoMail, Logger logger)
+	private static boolean parseFileCBI(String pathFullFileToElab, StringBuffer testoMail, LoggerWrapper logger)
 	{
 		StringBuffer testoAnomalie = new StringBuffer();
 		FileInputStream fis = null;
@@ -435,7 +434,7 @@ public class Generics_RID_AllineaCBI {
 		testoMail.append("NUMERO FILE PROCESSATI = " + fileProcessatiOk + "<br>");
 	}
 	
-	public static boolean allineaTransazioniCBI_InsolutiRID(String nextFlow, String nomeFile, Logger logger, PropertiesTree propertiesTree, StringBuffer testoMail, String dbSchemaCodSocieta) throws Exception {
+	public static boolean allineaTransazioniCBI_InsolutiRID(String nextFlow, String nomeFile, LoggerWrapper logger, PropertiesTree propertiesTree, StringBuffer testoMail, String dbSchemaCodSocieta) throws Exception {
 		//inizio LP PG21XX04 Leak
 		//FileInputStream fis = new FileInputStream(nextFlow);
 		//InputStreamReader isr = new InputStreamReader(fis);
@@ -538,7 +537,7 @@ public class Generics_RID_AllineaCBI {
 		}
 	}
 	
-	public static boolean allineaTransazioneCBI_InsolutiRID(String nomeFlusso, String dataCreazione, String idOperazione, String causale, PropertiesTree propertiesTree, Logger logger, String dbSchemaCodSocieta) 
+	public static boolean allineaTransazioneCBI_InsolutiRID(String nomeFlusso, String dataCreazione, String idOperazione, String causale, PropertiesTree propertiesTree, LoggerWrapper logger, String dbSchemaCodSocieta) 
 	{
 		String emailNotificaAdmin = propertiesTree.getProperty(PropertiesPath.emailAdmin.format());
 		
@@ -655,7 +654,7 @@ public class Generics_RID_AllineaCBI {
 		}
 	}
 	
-	private static boolean notificaAllineamentoCBI_InsolutiRID(String chiaveTransazione, String codCausale, PropertiesTree propertiesTree, Logger logger, String dbSchemaCodSocieta)
+	private static boolean notificaAllineamentoCBI_InsolutiRID(String chiaveTransazione, String codCausale, PropertiesTree propertiesTree, LoggerWrapper logger, String dbSchemaCodSocieta)
 	{
 		try 
 		{ 
@@ -697,7 +696,7 @@ public class Generics_RID_AllineaCBI {
 	 * @param log
 	 * @throws Exception
 	 */
-	public static void notificaErroreAllineamentoCBI_InsolutiRID(final String message, final Logger logger, final PropertiesTree propertiesTree, final String emailNotificaAdmin, final String cutecute) {
+	public static void notificaErroreAllineamentoCBI_InsolutiRID(final String message, final LoggerWrapper logger, final PropertiesTree propertiesTree, final String emailNotificaAdmin, final String cutecute) {
 		Thread thread = new Thread() {
 			@Override
 			public void run() {

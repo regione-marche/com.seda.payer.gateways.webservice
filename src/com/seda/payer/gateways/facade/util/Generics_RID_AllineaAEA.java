@@ -14,8 +14,9 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
 
+
+import com.seda.commons.logger.LoggerWrapper;
 import com.seda.commons.properties.tree.PropertiesTree;
 import com.seda.emailsender.webservices.dati.EMailSenderRequestType;
 import com.seda.emailsender.webservices.dati.EMailSenderResponse;
@@ -54,7 +55,7 @@ public class Generics_RID_AllineaAEA {
 	@SuppressWarnings("unchecked")
 	public static String[] manageAllineaRID_AEAFromFile(GatewayPagamentoBean serviceFacade, 
 			PropertiesTree propertiesTree, 
-			Logger logger, StringBuffer testoMail, StringBuffer oggettoMail,
+			LoggerWrapper logger, StringBuffer testoMail, StringBuffer oggettoMail,
 			String dbSchemaCodSocieta)
 	{
 		
@@ -245,7 +246,7 @@ public class Generics_RID_AllineaAEA {
 	 * @return
 	 * @throws FileNotFoundException
 	 */
-	private static List<RidAEARowInfo_12> getRowFromFile_RID(String nextFlowPath, Logger logger, StringBuffer testoMail) throws FileNotFoundException
+	private static List<RidAEARowInfo_12> getRowFromFile_RID(String nextFlowPath, LoggerWrapper logger, StringBuffer testoMail) throws FileNotFoundException
 	{
 		FileInputStream fis = new FileInputStream(nextFlowPath);
 		InputStreamReader isr = new InputStreamReader(fis);
@@ -446,7 +447,7 @@ public class Generics_RID_AllineaAEA {
 	 * @param logger
 	 * @param sRes
 	 */
-	private static void writeInfo(Logger logger, String[] sRes)
+	private static void writeInfo(LoggerWrapper logger, String[] sRes)
 	{
 		logger.info("AllineaRID res:"+sRes[0]+" message:"+sRes[1]);		
 	}
@@ -462,7 +463,7 @@ public class Generics_RID_AllineaAEA {
 	private static void saveAndSendMailAEA(RidAEARowInfo_12 ridAEA, 
 			GatewayPagamentoBean serviceFacade, 
 			PropertiesTree propertiesTree,
-			Logger logger, String dbSchemaCodSocieta) throws FacadeException
+			LoggerWrapper logger, String dbSchemaCodSocieta) throws FacadeException
 	{
 		if (ridAEA != null)
 		{
@@ -504,7 +505,7 @@ public class Generics_RID_AllineaAEA {
 	
 	public static int acceptRevocaAuto( 
 			GatewayPagamentoBean serviceFacade,
-			PropertiesTree propertiesTree, Logger logger, String dbSchemaCodSocieta) throws FacadeException
+			PropertiesTree propertiesTree, LoggerWrapper logger, String dbSchemaCodSocieta) throws FacadeException
 	{
 		int iNumRevoche = 0;
 		logger.info("acceptRevocaAuto started - Ricerca richieste di revoca in corso con termini di accettazione scaduti");
@@ -563,7 +564,7 @@ public class Generics_RID_AllineaAEA {
 		return iNumRevoche;
 	}
 	
-	public static void notificaErroreAllineamentoAEA(final String message, final Logger logger, final PropertiesTree propertiesTree, final String cutecute) {
+	public static void notificaErroreAllineamentoAEA(final String message, final LoggerWrapper logger, final PropertiesTree propertiesTree, final String cutecute) {
 		Thread thread = new Thread() {
 			@Override
 			public void run() {
