@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import org.w3c.dom.Document;
 
-import com.seda.commons.logger.LoggerServer;
+import com.seda.commons.logger.LoggerWrapper;
 import com.seda.commons.properties.tree.PropertiesTree;
 
 import com.seda.payer.gateways.facade.bean.GatewayPagamentoBean;
@@ -17,6 +17,7 @@ import com.seda.payer.gateways.webservice.dati.RIDAdesioneRequest;
 import com.seda.payer.gateways.webservice.dati.RIDAdesioneResponse;
 import com.seda.payer.gateways.webservice.dati.RIDRevocaRequest;
 import com.seda.payer.gateways.webservice.dati.RIDRevocaResponse;
+
 
 public class GenericsGTW {
 
@@ -64,7 +65,7 @@ public class GenericsGTW {
 			   "</service>";
 	}	
 	
-	public static String[] parseRidAdesione(RIDAdesioneResponse response, String sXML_Response, LoggerServer log) throws Exception
+	public static String[] parseRidAdesione(RIDAdesioneResponse response, String sXML_Response, LoggerWrapper log) throws Exception
 	{
 		String[] sResponseCode_Desc = new String[2];
 		
@@ -101,7 +102,7 @@ public class GenericsGTW {
 				   "</function>" +
 			   "</service>";
 	}	
-	public static String[]  parseRidRevoca(RIDRevocaResponse response, String sXML_Response, LoggerServer log) throws Exception
+	public static String[]  parseRidRevoca(RIDRevocaResponse response, String sXML_Response, LoggerWrapper log) throws Exception
 	{
 		String[] sResponseCode_Desc = new String[2];
 		//response = new RIDRevocaResponse();
@@ -109,9 +110,9 @@ public class GenericsGTW {
 		Document doc=GenericsXml.getXmlDocumentFromString(sXML_Response);
         
 		//recupero e setto i nodi codice e descrizione		
-		sResponseCode_Desc[0] = GenericsXml.getElementValue("/service/function/esito/codice", doc, log);
-		sResponseCode_Desc[1] = GenericsXml.getElementValue("/service/function/esito/descrizione", doc, log);
-    	
+//		sResponseCode_Desc[0] = GenericsXml.getElementValue("/service/function/esito/codice", doc, log);
+//		sResponseCode_Desc[1] = GenericsXml.getElementValue("/service/function/esito/descrizione", doc, log);
+//    	
     	// risposta nel payer
     	response.setRetCode(Generics_RID.convertValidResponseS2S(sResponseCode_Desc[0]));
     	response.setRetMessage(sResponseCode_Desc[1]);
