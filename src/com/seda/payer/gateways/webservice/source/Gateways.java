@@ -357,8 +357,7 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 		try {
 			info("Inizio integraGTWSinc");
 			
-			
-			
+
 			
 			// we retry gateway info
 			GeneraMessageGTWResponse generaMessageGTWResponse = this.generaMessageGTW(
