@@ -11,6 +11,9 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPHeader;
 import javax.xml.soap.SOAPHeaderElement;
 
+
+import com.seda.commons.logger.CustomLoggerManager;
+import com.seda.commons.logger.LoggerWrapper;
 import com.seda.commons.properties.tree.PropertiesTree;
 import com.seda.j2ee5.webservice.spi.JaxRpc10WebServiceHandler;
 import com.seda.payer.gateways.webservice.config.PrintStrings;
@@ -24,11 +27,13 @@ public abstract class WebServiceHandler extends JaxRpc10WebServiceHandler {
 	//fine LP PG200070
 	protected String dbSchemaCodSocieta; 
 	protected PropertiesTree configuration;
-
+	protected LoggerWrapper LOG = CustomLoggerManager.get(WebServiceHandler.class);
+	
+	
 	@Override
 	public void init(Object endPointContext) throws ServiceException {
 		super.init(endPointContext);
-		logger(loggerContextName);
+		
     	propertiesTree(treeContextName);
     	
     	setDbSchemaCodSocieta(endPointContext);

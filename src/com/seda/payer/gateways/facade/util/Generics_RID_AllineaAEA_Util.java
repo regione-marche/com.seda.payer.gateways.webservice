@@ -5,8 +5,7 @@ import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
+import com.seda.commons.logger.LoggerWrapper;
 import com.seda.commons.properties.tree.PropertiesTree;
 import com.seda.payer.gateways.facade.handler.PropertiesPath;
 
@@ -17,7 +16,7 @@ public class Generics_RID_AllineaAEA_Util {
 	private static int iNumGiorniLavorativiRID = 10;
 	
 	
-	public static Calendar getDate_AutoRevoca(PropertiesTree propertiesTree, Logger logger)
+	public static Calendar getDate_AutoRevoca(PropertiesTree propertiesTree, LoggerWrapper logger)
 	{		
 		//inizializzo la data ad oggi e sottraggo gli X giorni lavorativi
 		Calendar cData = Calendar.getInstance();
@@ -123,7 +122,7 @@ public class Generics_RID_AllineaAEA_Util {
 	/**
 	 * Setta i parametri del rid e ritorna l'hash con i mesi/giorni
 	 */
-	private static Hashtable<Integer, List<Integer>> getParamRID(PropertiesTree propertiesTree, Logger logger)
+	private static Hashtable<Integer, List<Integer>> getParamRID(PropertiesTree propertiesTree, LoggerWrapper logger)
 	{
 		bSabatoFestivo = true;
 		bDomenicaFestivo = true;

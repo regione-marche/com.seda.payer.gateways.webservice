@@ -15,7 +15,9 @@ import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.seda.commons.logger.LoggerServer;
+import com.seda.commons.logger.LoggerWrapper;
+
+
 
 public class GenericsXml {
 
@@ -57,7 +59,7 @@ public class GenericsXml {
 		return "";
 	}
 	
-	public static String getElementValue(String xpath_expr, Document doc, LoggerServer log)
+	public static String getElementValue(String xpath_expr, Document doc, LoggerWrapper log)
 	{
 		XPathFactory factory = XPathFactory.newInstance();
 		XPath xpath = factory.newXPath();

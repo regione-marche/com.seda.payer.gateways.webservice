@@ -19,7 +19,9 @@ import javax.xml.rpc.ServiceException;
 
 import org.apache.axis.AxisFault;
 
-import com.seda.commons.logger.LoggerServer;
+
+import com.seda.commons.logger.CustomLoggerManager;
+import com.seda.commons.logger.LoggerWrapper;
 import com.seda.commons.properties.tree.PropertiesTree;
 import com.seda.emailsender.webservices.dati.EMailSenderRequestType;
 import com.seda.emailsender.webservices.dati.EMailSenderResponse;
@@ -87,6 +89,7 @@ public class GatewaysIGHelper implements Serializable {
 	/**
 	 * @return
 	 */
+	private LoggerWrapper log = CustomLoggerManager.get(GatewaysIGHelper.class);
 	public static CommonsSOAPBindingStub getCommonsManager(PropertiesTree env, String dbSchemaCodSocieta) throws Exception {
 		// we initialize commons serviceLocator
 		CommonsServiceLocator serviceLocator = new CommonsServiceLocator();
@@ -159,7 +162,7 @@ public class GatewaysIGHelper implements Serializable {
 	 * @param chiave_gateway_di_pagamento
 	 * @throws Exception
 	 */
-	public static String getUrlRedirectQuietanza(String chiave_gateway_di_pagamento, LoggerServer log, String dbSchemaCodSocieta,PropertiesTree propertiesTree) throws Exception {
+	public static String getUrlRedirectQuietanza(String chiave_gateway_di_pagamento, LoggerWrapper log, String dbSchemaCodSocieta,PropertiesTree propertiesTree) throws Exception {
 	//fine LP PG200070 - 20200812
 	//fine LP PG200070
 		log.info("invioEsito - Start Get UrlRedirectQuietanza");
@@ -199,7 +202,7 @@ public class GatewaysIGHelper implements Serializable {
 	 * @return
 	 * @throws Exception
 	 */
-	public static TransazioniBeanTransazioni recuperaTransazione(CommonsSOAPBindingStub binding, BeanInvioEsitoRequest in, LoggerServer log) throws Exception {
+	public static TransazioniBeanTransazioni recuperaTransazione(CommonsSOAPBindingStub binding, BeanInvioEsitoRequest in, LoggerWrapper log) throws Exception {
 		RecuperaTransazioneRequestType recuperaTransazione = new RecuperaTransazioneRequestType(in.getCodiceMerchant());
 		log.info("invioEsito - Start recuperaTransazione");
 		RecuperaTransazioneResponseType recuperaTransazioneResponse = binding.recuperaTransazione(recuperaTransazione);
@@ -226,7 +229,7 @@ public class GatewaysIGHelper implements Serializable {
 	 * @throws Exception
 	 */
 	private static TransazioniBeanTransazioni recuperaTransazione(String chiaveTransazione, String idOperazione, 
-			CommonsSOAPBindingStub binding, LoggerServer log) throws Exception {
+			CommonsSOAPBindingStub binding, LoggerWrapper log) throws Exception {
 		RecuperaTransazioneRequestType recuperaTransazione = new RecuperaTransazioneRequestType(chiaveTransazione);
 		log.info("recuperaTransazione - Start recuperaTransazione");		
 		RecuperaTransazioneResponseType recuperaTransazioneResponse = binding.recuperaTransazione(recuperaTransazione);
@@ -249,7 +252,7 @@ public class GatewaysIGHelper implements Serializable {
 	 * @param binding
 	 * @throws Exception
 	 */
-	public static void aggiornaTransazione(TransazioniBeanTransazioni beanTransazioni, BeanInvioEsitoRequest in, CommonsSOAPBindingStub binding, LoggerServer log) throws Exception {
+	public static void aggiornaTransazione(TransazioniBeanTransazioni beanTransazioni, BeanInvioEsitoRequest in, CommonsSOAPBindingStub binding, LoggerWrapper log) throws Exception {
 		// we check If Flag_esito_transazione is 0 (pending) then update transaction
 		if (beanTransazioni.getFlag_esito_transazione().compareTo("0") == 0 ||
 				beanTransazioni.getFlag_esito_transazione().compareTo("2") == 0) 
@@ -282,7 +285,7 @@ public class GatewaysIGHelper implements Serializable {
 	 * @throws Exception
 	 */
 	private static boolean aggiornaTransazioneMAV(TransazioniBeanTransazioni beanTransazioni, String idOperazione, Date dataOperazione, Date dataAccreddito, String nomeFile, 
-			CommonsSOAPBindingStub binding, LoggerServer log) throws Exception 
+			CommonsSOAPBindingStub binding, LoggerWrapper log) throws Exception 
 	{
 		// è il edesimo aggiornamento per una transazione standard
 		return aggiornaTransazione(beanTransazioni, idOperazione, dataOperazione, dataAccreddito, nomeFile, binding, log);
@@ -297,7 +300,7 @@ public class GatewaysIGHelper implements Serializable {
 	 * @throws Exception
 	 */
 	private static boolean aggiornaTransazione(TransazioniBeanTransazioni beanTransazioni, String idOperazione, Date dataOperazione, Date dataAccredito, String nomeFile, 
-			CommonsSOAPBindingStub binding, LoggerServer log) throws Exception {
+			CommonsSOAPBindingStub binding, LoggerWrapper log) throws Exception {
 		// we update transaction state
 		Calendar dataOperazioneToCalendar = Calendar.getInstance();
 		dataOperazioneToCalendar.setTime(dataOperazione);
@@ -330,7 +333,7 @@ public class GatewaysIGHelper implements Serializable {
 	 * @param log
 	 * @throws Exception
 	 */
-	private static boolean aggiornaTransazioneStorno(String chiaveTransazione, String note, String statoStorno, CommonsSOAPBindingStub binding, LoggerServer log) throws Exception {
+	private static boolean aggiornaTransazioneStorno(String chiaveTransazione, String note, String statoStorno, CommonsSOAPBindingStub binding, LoggerWrapper log) throws Exception {
 
 		TransazioniBeanTransazioni beanTransazioni=new TransazioniBeanTransazioni();
 		
@@ -443,7 +446,7 @@ public class GatewaysIGHelper implements Serializable {
 	 * @param log
 	 * @throws Exception
 	 */
-	public static void notificaMancatoAllineamento(final String message, final LoggerServer log, final PropertiesTree env, final String emailNotificaAdmin, final String cutecute) {
+	public static void notificaMancatoAllineamento(final String message, final LoggerWrapper log, final PropertiesTree env, final String emailNotificaAdmin, final String cutecute) {
 		Thread thread = new Thread() {
 			@Override
 			public void run() {
@@ -476,8 +479,8 @@ public class GatewaysIGHelper implements Serializable {
 	 * @throws Exception
 	 */
 	//inizio LP PG200070 - 20200812
-	//public static boolean allineaTransazioniIG(String nextFlow, String nomeFile, PropertiesTree env, LoggerServer log, String dbSchemaCodSocieta) throws Exception {
-	public static boolean allineaTransazioniIG(String nextFlow, String nomeFile, PropertiesTree env, LoggerServer log, String dbSchemaCodSocieta) throws Exception {
+	//public static boolean allineaTransazioniIG(String nextFlow, String nomeFile, PropertiesTree env, LoggerWrapper log, String dbSchemaCodSocieta) throws Exception {
+	public static boolean allineaTransazioniIG(String nextFlow, String nomeFile, PropertiesTree env, LoggerWrapper log, String dbSchemaCodSocieta) throws Exception {
 	//fine LP PG200070 - 20200812
 		FileInputStream fis = new FileInputStream(nextFlow);
 		InputStreamReader isr = new InputStreamReader(fis);
@@ -602,9 +605,9 @@ public class GatewaysIGHelper implements Serializable {
 	 */
 	//inizio LP PG200070 - 20200812
 	//private static boolean allineaTransazioneIG(String nomeSupporto, String dataIncassoBolletta, String dataAccredito, String chiaveTransazione, String idOperazione,
-	//		String importoLordo, String segnoImporto, String nomeFile, PropertiesTree env, LoggerServer log, String dbSchemaCodSocieta) {
+	//		String importoLordo, String segnoImporto, String nomeFile, PropertiesTree env, LoggerWrapper log, String dbSchemaCodSocieta) {
 	private static boolean allineaTransazioneIG(String nomeSupporto, String dataIncassoBolletta, String dataAccredito, String chiaveTransazione, String idOperazione,
-			String importoLordo, String segnoImporto, String nomeFile, PropertiesTree env, LoggerServer log, String dbSchemaCodSocieta) {
+			String importoLordo, String segnoImporto, String nomeFile, PropertiesTree env, LoggerWrapper log, String dbSchemaCodSocieta) {
 	//fine LP PG200070 - 20200812
 		
 		String emailNotificaAdmin = env.getProperty(PropKeys.EMAIL_NOTIFY_TO_LIST.format()); 
@@ -841,12 +844,12 @@ public class GatewaysIGHelper implements Serializable {
 	 * @param gtwigRequest
 	 * @param response
 	 * @param propertiesTree
-	 * @param loggerServer
+	 * @param LoggerWrapper
 	 * @return
 	 * @throws Exception
 	 */
 	public static boolean gestisciMAVPostS2S(RedirectToGTWIGRequest gtwigRequest, RedirectToGTWIGResponse response, 
-			PropertiesTree propertiesTree, LoggerServer loggerServer, String dbSchemaCodSocieta) throws Exception
+			PropertiesTree propertiesTree, LoggerWrapper LoggerWrapper, String dbSchemaCodSocieta) throws Exception
     {
 		boolean result = true;		
 		
@@ -856,7 +859,7 @@ public class GatewaysIGHelper implements Serializable {
 		TransazioniBeanTransazioni beanTransazioni = null;
 		try 
 		{ 
-			beanTransazioni = GatewaysIGHelper.recuperaTransazione(gtwigRequest.getCodiceMerchant(), gtwigRequest.getIdOperazione(), binding, loggerServer);		
+			beanTransazioni = GatewaysIGHelper.recuperaTransazione(gtwigRequest.getCodiceMerchant(), gtwigRequest.getIdOperazione(), binding, LoggerWrapper);		
 		} 
 		catch (Exception e) 
 		{ 
@@ -877,18 +880,18 @@ public class GatewaysIGHelper implements Serializable {
 			aggiornaTransazione.setNumeroMAV(response.getMavNumeroMav());
         	AggiornaTransazioneIGMavResponse aggiornaTransazioneResponse = binding.aggiornaTransazioneIGMav(aggiornaTransazione);
         	
-        	loggerServer.info("aggiornaTransazioneMAV response code - " + aggiornaTransazioneResponse.getResponse().getRetCode().getValue());
-        	loggerServer.info("aggiornaTransazioneMAV response message - " + aggiornaTransazioneResponse.getResponse().getRetMessage());
+        	LoggerWrapper.info("aggiornaTransazioneMAV response code - " + aggiornaTransazioneResponse.getResponse().getRetCode().getValue());
+        	LoggerWrapper.info("aggiornaTransazioneMAV response message - " + aggiornaTransazioneResponse.getResponse().getRetMessage());
 			
 		} 
 		catch (Exception e) 
 		{
-			loggerServer.error("aggiornaTransazione failed, generic error due to: ", e);
+			LoggerWrapper.error("aggiornaTransazione failed, generic error due to: ", e);
 			throw new Exception("gestisciMAV  CodiceMerchant " + gtwigRequest.getCodiceMerchant() + " fallito"); 
 		}
 		
 		// invio mail e salvo il pdf nel file syste e mi ritorna tale posizione con il nome del file
-		notificaMAVNuovo(gtwigRequest.getCodiceMerchant(), gtwigRequest.getCodDebitore(), response, propertiesTree, loggerServer, dbSchemaCodSocieta);
+		notificaMAVNuovo(gtwigRequest.getCodiceMerchant(), gtwigRequest.getCodDebitore(), response, propertiesTree, LoggerWrapper, dbSchemaCodSocieta);
     	   	
 		return result;
     }    
@@ -900,7 +903,7 @@ public class GatewaysIGHelper implements Serializable {
 	 * @throws Exception
 	 */
 	private static boolean notificaMAVNuovo(String idTransazione, String codiceFiscale,
-			RedirectToGTWIGResponse response, PropertiesTree env, LoggerServer loggerServer, String dbSchemaCodSocieta) throws Exception 
+			RedirectToGTWIGResponse response, PropertiesTree env, LoggerWrapper LoggerWrapper, String dbSchemaCodSocieta) throws Exception 
 	{
 		// we initialize notificheStub
 		NotificheSOAPBindingStub ntfStub = getNotificheWS(env, dbSchemaCodSocieta);
@@ -922,7 +925,7 @@ public class GatewaysIGHelper implements Serializable {
 	    }
 	    else
 	    {	    	
-	    	loggerServer.error("notificaMAVNuovo failed, not saved file pdf: ");
+	    	LoggerWrapper.error("notificaMAVNuovo failed, not saved file pdf: ");
 	    	response.setMavPdfFilePath("");
 	    	return false;
 	    }
@@ -933,7 +936,7 @@ public class GatewaysIGHelper implements Serializable {
 	 * @param beanTransazioni
 	 * @throws Exception
 	 */
-	private static boolean notificaMAVPagato(String chiaveTransazione, PropertiesTree env, LoggerServer loggerServer, String dbSchemaCodSocieta) throws Exception {
+	private static boolean notificaMAVPagato(String chiaveTransazione, PropertiesTree env, LoggerWrapper LoggerWrapper, String dbSchemaCodSocieta) throws Exception {
 		// we initialize notificheStub
 		NotificheSOAPBindingStub ntfStub = getNotificheWS(env, dbSchemaCodSocieta);
 
@@ -951,12 +954,12 @@ public class GatewaysIGHelper implements Serializable {
 	    }
 	    else
 	    {
-	    	loggerServer.error("notificaMAVPagato failed, not send mail");		    
+	    	LoggerWrapper.error("notificaMAVPagato failed, not send mail");		    
 		    return false;
 	    }
 	}
 	
-	private static boolean notificaRIDPagato(String chiaveTransazione, PropertiesTree env, LoggerServer loggerServer, String dbSchemaCodSocieta) throws Exception
+	private static boolean notificaRIDPagato(String chiaveTransazione, PropertiesTree env, LoggerWrapper LoggerWrapper, String dbSchemaCodSocieta) throws Exception
 	{
 		String operFunzione = "RN";
 		String operInvio = "OK";
@@ -979,7 +982,7 @@ public class GatewaysIGHelper implements Serializable {
 	    }
 	    else
 	    {
-	    	loggerServer.error("notificaRIDPagato failed, not send notifica");		    
+	    	LoggerWrapper.error("notificaRIDPagato failed, not send notifica");		    
 		    return false;
 	    }
 	}
