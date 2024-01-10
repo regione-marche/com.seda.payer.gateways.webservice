@@ -136,6 +136,8 @@ import com.esed.easybridge.webservice.source.EasybridgeInterface;
 import com.esed.easybridge.webservice.source.EasybridgeLocator;
 import com.esed.easybridge.webservice.source.EasybridgeSOAPBindingStub;
 import com.esed.log.req.dati.LogPap;
+import com.seda.commons.logger.CustomLoggerManager;
+import com.seda.commons.logger.LoggerWrapper;
 import com.seda.commons.properties.tree.PropertiesTree;
 import com.seda.commons.string.Convert;
 //inizio LP PG200070
@@ -283,6 +285,8 @@ import eBLBaseComponents.apis.ebay.UserIdPasswordType;
 
 public class Gateways extends WebServiceHandler implements com.seda.payer.gateways.webservice.source.GatewaysInterface {
 	
+	protected LoggerWrapper logger = CustomLoggerManager.get(getClass());
+
 	static final PaymentActionCodeType DEFAULT_PAYMENT_ACTION = PaymentActionCodeType.Sale;
 	static final String PP_ACK_SUCCESS = "Success";
 	static final String EMPTY_TOKEN = " ";
@@ -3473,7 +3477,7 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 								ibanAccreditoBollettino = configPagamentoSingleResponse.getConfigPagamento().getCodiceIBAN2();
 						}
 						
-						int progBollettino = beanIci.getProgBollettino();
+						int progBollettino = beanIci.getProgBollettino(); 
 						//inizio LP PG200360
 						tassonomia = (beanIci.getTassonomia() != null ? beanIci.getTassonomia().trim() : null);
 						/*
@@ -3654,7 +3658,7 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 						String tipoBolloDaErogare = beanIV.getTipoBolloDaErogare().trim();
 						String provinciaResidenza = beanIV.getProvinciaResidenza().trim();
 						
-						int progBollettino = beanIV.getProgBollettino();
+						int progBollettino = beanIV.getProgBollettino() - 1;
 						//inizio LP PG200360
 						tassonomia = (beanIV.getTassonomia() != null ? beanIV.getTassonomia().trim() : null);
 						/*
@@ -3682,7 +3686,7 @@ public class Gateways extends WebServiceHandler implements com.seda.payer.gatewa
 							tassonomia = sDefaultTassonomia;
 						}
 						//fine LP PG200360
-						if (listRptDatiPagamenti.get(progBollettino).getIbanAccredito()==null){
+						if (listRptDatiPagamenti.get(progBollettino).getIbanAccredito()==null){	
 							listRptDatiPagamenti.get(progBollettino).setIbanAccredito(ibanAccreditoBollettino);
 							listRptDatiPagamenti.get(progBollettino).setIbanAppoggio(ibanAppoggioBollettino);
 							listRptDatiPagamenti.get(progBollettino).setImportoSingoloPagamento(beanIV.getImporto_totale_bollettino().subtract(importoMarcaDaBolloDigitale));
