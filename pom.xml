@@ -209,13 +209,6 @@
 			<groupId>javax.xml.soap</groupId>
 			<artifactId>javax.xml.soap-api</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>com.esed.log.req</groupId>
-			<artifactId>com.esed.log.req</artifactId>
-			<version>1.2.0</version>
-			<scope>compile</scope>
-		</dependency>
 		
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
