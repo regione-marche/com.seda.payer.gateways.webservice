@@ -172,7 +172,7 @@
 		<dependency>
 			<groupId>org.esed.myPayPagonet.webservice.client</groupId>
 			<artifactId>org.esed.myPayPagonet.webservice.client</artifactId>
-			<version>1.0</version>
+			<version>1.1.0</version>
 			<scope>compile</scope>
 		</dependency>
 
@@ -208,13 +208,6 @@
 		<dependency>
 			<groupId>javax.xml.soap</groupId>
 			<artifactId>javax.xml.soap-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.esed.log.req</groupId>
-			<artifactId>com.esed.log.req</artifactId>
-			<version>1.2.0</version>
-			<scope>compile</scope>
 		</dependency>
 		
 		<dependency>
